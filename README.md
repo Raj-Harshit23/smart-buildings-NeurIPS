@@ -116,6 +116,12 @@ building/strip combination exists, so check what a building has with
 
 ## Writing your policy
 
+Read [MATHEMATICAL_FRAMEWORK.md](MATHEMATICAL_FRAMEWORK.md) before designing a
+new model or controller. It specifies the objective, input/output contract,
+constraints, physical coupling, and verification limits. Refer to its relevant
+sections in each model's design notes; [AGENTS.md](AGENTS.md) records this standing
+requirement for future repository work.
+
 **Edit `smart_buildings/baselines/transfer_policy.py`.** It carries the full
 interface contract in its module docstring — action layout, observation layout,
 what each setpoint physically does, and the traps. Read that first;
