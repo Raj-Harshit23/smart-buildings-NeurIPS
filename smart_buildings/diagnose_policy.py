@@ -33,7 +33,8 @@ def run(scenario: Path, policy_key: str, steps: int, output: Path, sensor_bands:
             raise ValueError("Selected controller does not support sensor-band ablation")
         policy.USE_SENSOR_BAND = True
     run_name = policy_key + ("_sensor_bands" if sensor_bands else "")
-    source_files = sorted(Path("smart_buildings/baselines").glob("*.py"))
+    source_files = sorted(p for p in Path("smart_buildings/baselines").glob("*.py")
+                          if not p.name.endswith("_test.py") and not p.name.startswith("test_"))
     source_hashes = {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in source_files}
     source_dir = output / "source"
     source_dir.mkdir(exist_ok=True)

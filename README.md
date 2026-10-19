@@ -125,6 +125,8 @@ requirement for future repository work.
 The first experimental heating-aware policy is `thermal_allocator`; see
 [its design and reproduction notes](THERMAL_ALLOCATOR.md). It is evaluated
 alongside `pid_water` and does not replace the reference baselines.
+The next experiment, `lag_aware_allocator`, adds a causal thermal observer;
+see [its delay and identification notes](DELAY_AWARE_ALLOCATOR.md).
 
 **Edit `smart_buildings/baselines/transfer_policy.py`.** It carries the full
 interface contract in its module docstring — action layout, observation layout,

@@ -36,10 +36,12 @@ def write(path, data):
     temporary.replace(path)
 
 
-def compare(root, scenarios):
+def compare(root, scenarios, policies=POLICIES, reference_root=None):
     rows = []
     for scenario in scenarios:
-        pair = [load(root / scenario / policy / "summary.json") for policy in POLICIES]
+        roots = [reference_root or root, root]
+        pair = [load(directory / scenario / policy / "summary.json")
+                for directory, policy in zip(roots, policies)]
         if any(row is None for row in pair):
             return None
         base, candidate = pair
@@ -64,6 +66,11 @@ def main():
     parser.add_argument("--root", type=Path, default=Path("results/allocator-v1"))
     parser.add_argument("--workers", type=int, default=3)
     parser.add_argument("--hours", type=float, default=4)
+    parser.add_argument("--baseline", choices=["pid_water", "thermal_allocator"], default="pid_water")
+    parser.add_argument("--candidate", choices=["thermal_allocator", "lag_aware_allocator"], default="thermal_allocator")
+    parser.add_argument("--reference-root", type=Path,
+                        help="Reuse completed matched reference runs; never relaunch reference jobs")
+    parser.add_argument("--skip-ablation", action="store_true")
     args = parser.parse_args()
     if not 1 <= args.workers <= 4 or not 0 < args.hours <= 12:
         parser.error("Use 1–4 workers and a positive budget of at most 12 hours")
@@ -75,12 +82,17 @@ def main():
     if previous and previous.get("stage") in ("qualified_for_kaggle_validation", "rejected", "failed"):
         print(json.dumps(previous), flush=True)
         return
-    source_path = Path("smart_buildings/baselines/thermal_allocator.py")
+    policies = [args.baseline, args.candidate]
+    source_path = Path("smart_buildings/baselines") / (args.candidate + ".py")
     source_hash = hashlib.sha256(source_path.read_bytes()).hexdigest()
     if previous and previous["controller_sha256"] != source_hash:
         raise SystemExit("Controller changed: use a new campaign directory")
+    if previous and previous.get("policies", policies) != policies:
+        raise SystemExit("Policies changed: use a new campaign directory")
     state = previous or {"stage": "waiting_for_pilot", "controller_sha256": source_hash,
                          "pilot_scenarios": PILOT, "validation_scenarios": VALIDATION,
+                         "policies": policies,
+                         "reference_root": str(args.reference_root) if args.reference_root else None,
                          "authorization": "User authorized autonomous grounded experiments and validation",
                          "gate": "Pilot mean improves >=5%; no scenario regresses >10%; then validate three additional pairs",
                          "network_actions": "None; Kaggle packaging/submission requires a separate validated artifact"}
@@ -107,14 +119,14 @@ def main():
                     time.sleep(30)
                     continue
                 previous["running"] = {}
-            pilot = compare(args.root, PILOT)
+            pilot = compare(args.root, PILOT, policies, args.reference_root)
             if pilot is None:
                 write(state_path, state)
                 time.sleep(30)
                 continue
             state["pilot"] = pilot
             for scenario in PILOT:
-                candidate = load(args.root / scenario / "thermal_allocator" / "summary.json")
+                candidate = load(args.root / scenario / args.candidate / "summary.json")
                 recorded = candidate["source_sha256"][str(source_path)]
                 if recorded != source_hash:
                     raise ValueError(f"Candidate source differs from campaign: {scenario}")
@@ -122,8 +134,10 @@ def main():
                 state.update(stage="rejected", reason="Predeclared pilot improvement/regression gate failed")
                 break
             state["stage"] = "validating_transfer"
-            tasks = [(scenario, policy, False) for scenario in VALIDATION for policy in POLICIES]
-            tasks.append((PILOT[1], "pid_water", True))
+            tasks = [(scenario, policy, False) for scenario in VALIDATION for policy in policies
+                     if policy == args.candidate or args.reference_root is None]
+            if not args.skip_ablation:
+                tasks.append((PILOT[1], args.baseline, True))
             for key, (process, stream) in list(running.items()):
                 if process.poll() is not None:
                     stream.close()
@@ -153,16 +167,16 @@ def main():
                 process = subprocess.Popen(cmd, stdout=stream, stderr=subprocess.STDOUT, env=env)
                 running[key] = process, stream
             state["running"] = {key: process.pid for key, (process, _) in running.items()}
-            validation = compare(args.root, VALIDATION)
+            validation = compare(args.root, VALIDATION, policies, args.reference_root)
             if validation is not None:
-                combined = compare(args.root, PILOT + VALIDATION)
+                combined = compare(args.root, PILOT + VALIDATION, policies, args.reference_root)
                 state["validation"] = validation
                 state["combined"] = combined
-                ablation = load(args.root / PILOT[1] / "pid_water_sensor_bands" / "summary.json")
+                ablation = load(args.root / PILOT[1] / (args.baseline + "_sensor_bands") / "summary.json")
                 if ablation is not None:
                     state["sensor_band_ablation"] = {k: ablation[k] for k in
                                                     ("scenario", "mean_loss", "mean_components", "steps")}
-                if not running and ablation is not None:
+                if not running and (args.skip_ablation or ablation is not None):
                     passed = (combined["relative_improvement"] >= .05
                               and validation["relative_improvement"] >= 0
                               and combined["worst_relative_improvement"] >= -.10

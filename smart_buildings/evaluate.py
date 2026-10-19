@@ -44,6 +44,7 @@ from smart_buildings.baselines.pid import PIDPolicy
 # from. They are base classes, not runnable policies, so only the leaf is
 # imported here.
 from smart_buildings.baselines.pid_plus import PIDWaterResetPolicy
+from smart_buildings.baselines.lag_aware_allocator import LagAwareAllocatorPolicy
 from smart_buildings.baselines.thermal_allocator import ThermalAllocatorPolicy
 from smart_buildings.baselines.transfer_policy import TransferPolicy
 
@@ -97,6 +98,7 @@ POLICY_MAP: dict[str, type[Any]] = {
     "pid": PIDPolicy,
     "pid_water": PIDWaterResetPolicy,
     "thermal_allocator": ThermalAllocatorPolicy,
+    "lag_aware_allocator": LagAwareAllocatorPolicy,
     # Runnable reference, not part of the baseline set.
     "all_off": AllOffPolicy,
 }

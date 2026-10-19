@@ -32,6 +32,18 @@ not access the network or submit entries. Logs, progress, trajectories, source
 snapshots and its qualification decision are under `results/allocator-v1/`.
 The existing V0 status tracker has its own bounded lifetime.
 
+V1 validation is pinned to detached worktree
+`/workspace/smart-buildings-research/frozen-allocator-v1` at commit `5f53c59`.
+The exported notebook matched 17280 recorded actions across two complete
+different-building trajectories. A separate eight-hour launcher at
+`/workspace/smart-buildings-research/launch_validated_v1.py` waits for the full
+local gate before creating one private, offline validation notebook. It then
+requires official gateway completion before requesting at most one scored entry.
+Attempt markers prevent blind retries after ambiguous network responses.
+
+The delay-aware observer experiment runs separately in the working checkout;
+it cannot silently change the frozen V1 validation or notebook source.
+
 These processes can continue while their execution environment exists. They do
 not guarantee that model reasoning or new experiment design continues after the
 cloud session terminates.
