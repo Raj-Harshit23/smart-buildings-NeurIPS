@@ -51,6 +51,34 @@ $$
 The initial submitted V0 uses the shipped `PIDWaterResetPolicy` (`pid_water`).
 Its measured performance is a baseline, not a mathematical requirement.
 
+### Verified local sensor timing
+
+A subsequent three-step simulator probe verified that the zone-temperature
+register is refreshed at the start of a physical step, before the thermal field
+advances. If $T_t^{physical}$ denotes the actual grid-averaged zone temperature at
+decision $t$, then, after initialization, the local observation behaves as
+
+$$
+o_t^{zone\ temperature}=\mathcal N(T_{t-1}^{physical}),\qquad
+T_{t+1}^{physical}=F_T(x_t,u_t,w_t).
+$$
+
+Thus the temperature consequence of $u_t$ appears in $o_{t+2}$, and system
+identification must align those delayed labels. The overall state $x_t$ in (1)
+can include these sensor registers, preserving the observation formulation.
+Weather and water observations need not have the same delay; do not shift the
+whole observation vector uniformly.
+
+In a building-8/Phoenix probe, a maximum-flow cooling action changed the physical
+zone temperature from 294 K to 289.354 K while the returned zone sensor still
+reported 294 K. The next returned sensor reported 289.354 K. The saved probe is
+[here](experiments/observation_delay.json). This verifies the local implementation;
+the hidden SDK's timing has not been independently checked.
+
+Sources: [sensor refresh and thermal step](smart_buildings/smart_control/simulator/simulator_flexible_floor_plan.py),
+[VAV sensor register](smart_buildings/smart_control/simulator/vav.py),
+[observation request](smart_buildings/smart_control/simulator/simulator_building.py).
+
 ## 2. Exact local scoring objective
 
 For $S$ evaluated scenarios and rollout horizon $H_s$:

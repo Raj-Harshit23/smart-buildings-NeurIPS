@@ -44,6 +44,7 @@ from smart_buildings.baselines.pid import PIDPolicy
 # from. They are base classes, not runnable policies, so only the leaf is
 # imported here.
 from smart_buildings.baselines.pid_plus import PIDWaterResetPolicy
+from smart_buildings.baselines.thermal_allocator import ThermalAllocatorPolicy
 from smart_buildings.baselines.transfer_policy import TransferPolicy
 
 # Gin registration imports. These are intentionally kept even if not directly
@@ -95,6 +96,7 @@ POLICY_MAP: dict[str, type[Any]] = {
     "fixed_setpoint": FixedSetpointPolicy,
     "pid": PIDPolicy,
     "pid_water": PIDWaterResetPolicy,
+    "thermal_allocator": ThermalAllocatorPolicy,
     # Runnable reference, not part of the baseline set.
     "all_off": AllOffPolicy,
 }

@@ -122,6 +122,10 @@ constraints, physical coupling, and verification limits. Refer to its relevant
 sections in each model's design notes; [AGENTS.md](AGENTS.md) records this standing
 requirement for future repository work.
 
+The first experimental heating-aware policy is `thermal_allocator`; see
+[its design and reproduction notes](THERMAL_ALLOCATOR.md). It is evaluated
+alongside `pid_water` and does not replace the reference baselines.
+
 **Edit `smart_buildings/baselines/transfer_policy.py`.** It carries the full
 interface contract in its module docstring — action layout, observation layout,
 what each setpoint physically does, and the traps. Read that first;

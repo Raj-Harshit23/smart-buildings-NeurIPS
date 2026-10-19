@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-19",
+  "scenario": "building_train_8/phoenix_4",
+  "scope": "Local simulator probe; hidden SDK timing not verified",
+  "action": "AHUs on, 285 K supply command, 2000 Pa pressure, zero recirculation, dampers fully open, reheat closed, water system off",
+  "policy_information": "Physical grid temperatures were read only for diagnosis, never passed to a controller",
+  "rows": [
+    {"step": 0, "true_start": 294.0, "observed_start": 293.99999998509884, "true_end": 289.35418539236645, "observed_end": 293.99999998509884},
+    {"step": 1, "true_start": 289.35418539236645, "observed_start": 293.99999998509884, "true_end": 288.2363790301351, "observed_end": 289.35418725013733},
+    {"step": 2, "true_start": 288.2363790301351, "observed_start": 289.35418725013733, "true_end": 287.93363764202604, "observed_end": 288.23638916015625}
+  ],
+  "checks": "Returned temperature equals physical start temperature to 1e-4 K; differs from physical end temperature by more than 0.01 K"
+}
