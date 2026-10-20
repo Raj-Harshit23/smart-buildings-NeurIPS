@@ -115,3 +115,23 @@ observer equivalence when both variants use the same actuator law, correct
 two-call action/label alignment, reset, bounded unexcited covariance, and delivery
 of the corrected state to PID. Test receipt and source hashes are retained in
 `results/lag-aware-pid-v3/tests.json`.
+
+## Adaptive inverse heat demand
+
+[Design and mathematical limitations](ADAPTIVE_HEATING.md). This retains the
+delay observer and heating airflow/water coordination, replacing the shared
+fixed-gain heat request with guarded inversion of the online thermal model.
+Both Fairbanks full episodes are running; partial returns are not final results.
+
+The expanded suite passed **99 tests**, with 14 existing warnings. New tests
+check the inverse request against the forward implicit model, confidence
+fallback, mature actions on two differently sized real buildings, exact selected
+action history, delayed identification, reset and covariance stability.
+
+The complete Phoenix and Singapore actions exactly match V2 on all 8640 steps
+each. Their losses are therefore 0.03947549 and 0.02603479. These are explicitly
+recorded as **action-equivalent replay** of completed local simulator rollouts,
+not new simulator runs. The physics, weather, scenarios, diagnostic runner and
+environment AST (apart from controller dispatch) were checked against `e13512e`.
+This equivalence says nothing about hidden evaluator parity. A mismatching
+action prevents trajectory reuse. No adaptive-controller public score exists yet.

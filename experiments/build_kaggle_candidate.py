@@ -19,6 +19,7 @@ import sys
 POLICIES = {
     "lag_aware_allocator": ("lag_aware_allocator.py", "LagAwareAllocatorPolicy"),
     "lag_aware_pid": ("lag_aware_pid.py", "LagAwarePIDPolicy"),
+    "adaptive_heating": ("adaptive_heating.py", "AdaptiveHeatingPolicy"),
 }
 
 
@@ -46,6 +47,8 @@ def main():
         raise ValueError("Use a new artifact directory; existing publication state is immutable")
     names = ["pid.py", "pid_plus.py", "thermal_allocator.py", "lag_aware_allocator.py"]
     leaf, class_name = POLICIES[args.policy]
+    if args.policy == "adaptive_heating":
+        names.append("lag_aware_pid.py")
     if leaf not in names:
         names.append(leaf)
     paths = [source / "smart_buildings/baselines" / name for name in names]

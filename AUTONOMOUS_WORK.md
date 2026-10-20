@@ -59,6 +59,14 @@ frozen V1/V2 models are included. The reusable offline exporter
 matching test/source hashes, and exact exported/source/recorded-action equality
 on two distinct complete trajectories. It has no network side effects.
 
+The next [adaptive heat-demand experiment](ADAPTIVE_HEATING.md) uses the learned
+implicit thermal inverse in place of the fixed heat gain. Its full suite passes
+99 tests. Both Fairbanks cases are fresh simulator runs; cooling trajectories
+are reused only after exact complete causal action replay and verified unchanged
+local dynamics. `experiments/replay_equivalent_policy.py` records this provenance
+explicitly. Its separate four-hour supervisor compares directly with V0 and
+enforces the same transfer gate. Local results remain distinct from public scores.
+
 These processes can continue while their execution environment exists. They do
 not guarantee that model reasoning or new experiment design continues after the
 cloud session terminates.

@@ -7,6 +7,7 @@ import pytest
 
 from smart_buildings.baselines.lag_aware_allocator import LagAwareAllocatorPolicy
 from smart_buildings.baselines.lag_aware_pid import LagAwarePIDPolicy
+from smart_buildings.baselines.adaptive_heating import AdaptiveHeatingPolicy
 from smart_buildings.evaluate import create_building_meta_data, load_hybrid_environment
 
 
@@ -19,7 +20,7 @@ def data():
     return metadata, env.action_spec(), obs
 
 
-@pytest.mark.parametrize("policy_type", [LagAwareAllocatorPolicy, LagAwarePIDPolicy])
+@pytest.mark.parametrize("policy_type", [LagAwareAllocatorPolicy, LagAwarePIDPolicy, AdaptiveHeatingPolicy])
 def test_identification_uses_action_two_calls_before_observed_label(data, policy_type):
     metadata, spec, original = data
     policy = policy_type(metadata, spec)
@@ -44,7 +45,7 @@ def test_identification_uses_action_two_calls_before_observed_label(data, policy
     np.testing.assert_array_equal(captured[1], second["discrete_action"])
 
 
-@pytest.mark.parametrize("policy_type", [LagAwareAllocatorPolicy, LagAwarePIDPolicy])
+@pytest.mark.parametrize("policy_type", [LagAwareAllocatorPolicy, LagAwarePIDPolicy, AdaptiveHeatingPolicy])
 def test_unexcited_estimation_stays_finite_and_covariance_bounded(data, policy_type):
     metadata, spec, obs = data
     policy = policy_type(metadata, spec)
@@ -61,7 +62,7 @@ def test_unexcited_estimation_stays_finite_and_covariance_bounded(data, policy_t
     assert np.isfinite(policy._theta).all()
 
 
-@pytest.mark.parametrize("policy_type", [LagAwareAllocatorPolicy, LagAwarePIDPolicy])
+@pytest.mark.parametrize("policy_type", [LagAwareAllocatorPolicy, LagAwarePIDPolicy, AdaptiveHeatingPolicy])
 def test_reset_clears_delayed_command_queue(data, policy_type):
     metadata, spec, obs = data
     policy = policy_type(metadata, spec)
