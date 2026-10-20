@@ -1,0 +1,55 @@
+{
+  "scope": "Production observer reproduces causal prototype forecasts on fixed V4 commands; not control-performance evidence",
+  "rows": [
+    {
+      "scenario": "building_train_2/fairbanks_2",
+      "steps": 8640,
+      "maximum_metric_difference_from_prototype": 0.0
+    },
+    {
+      "scenario": "building_train_1/fairbanks_1",
+      "steps": 8640,
+      "maximum_metric_difference_from_prototype": 0.0
+    },
+    {
+      "scenario": "building_train_8/phoenix_4",
+      "steps": 8640,
+      "maximum_metric_difference_from_prototype": 0.0
+    },
+    {
+      "scenario": "building_train_5/singapore_4",
+      "steps": 8640,
+      "maximum_metric_difference_from_prototype": 0.0
+    }
+  ],
+  "frozen_revision": "9633fda516c55dc1f3d082a6d1f1560828ac8825",
+  "test_receipt": {
+    "passed": 120,
+    "command": "python -m pytest -q --disable-warnings",
+    "evaluation_protocol": "non_mutating_v2",
+    "sources": {
+      "smart_buildings/baselines/adaptive_cooling.py": "0127f93276ae0c39fde81f7805dc84bab236f1226992d9dfab0d3fe77b86b6c2",
+      "smart_buildings/baselines/adaptive_heating.py": "abe055452b2cd4bff0bdf2bdd7eeef348ca911d24bded7d801796dbf322b320b",
+      "smart_buildings/baselines/all_off.py": "50521df5b36540d06c3193d077210029ef8fc35db42484e2cb90deb202d40b7d",
+      "smart_buildings/baselines/bang_bang.py": "067776d0f3e09913f1519972c675fee7591d130a21ce76a73cd746fb85fb2e87",
+      "smart_buildings/baselines/fixed_setpoint.py": "6e07e9484f3835ed888a65ed0b5a0471e8a6888677bdfcfd7bc7336eca4b532b",
+      "smart_buildings/baselines/lag_aware_allocator.py": "c023ce2c4f463394fd0cd35611d35fa6cec587893e4fc377d36d4de5502e3a51",
+      "smart_buildings/baselines/lag_aware_pid.py": "957e36ff2801717bccf97238a276b351b4c1cf72a4eb2fdf7ef932bf4fe89ece",
+      "smart_buildings/baselines/pid.py": "c276046e85a147b8a1c3b02d5f609992eb2b2256b87fc27d3750ff802c14412e",
+      "smart_buildings/baselines/pid_plus.py": "74b551b3089ce8c149054805036bf28b41fa4e979eb42b87fb202c4f215e8881",
+      "smart_buildings/baselines/regularized_heating.py": "61e8cd1f078f5a28c6760aed133a72d26255071d2add76a222718f34c0cc2908",
+      "smart_buildings/baselines/thermal_allocator.py": "6d0baf882889cec92b5943dded253fd05b8f160c3fcd6d8963198b64589b37ad",
+      "smart_buildings/baselines/transfer_policy.py": "a1331c97925f8f995519295e63995b1680d21a93425964f11df1d4a59fc46067",
+      "smart_buildings/diagnose_policy.py": "05a8735aad9736567dc365af8d33fd6d84b2a77b15efacd3a78162ef7c8068be"
+    },
+    "checked_at": "2026-10-20T11:34:43.237171+00:00",
+    "test_output": "........................................................................ [ 60%]\n................................................                         [100%]\n120 passed, 14 warnings in 258.32s (0:04:18)\n"
+  },
+  "bounded_automation": {
+    "/workspace/smart-buildings-research/prepare_regularized_v6.py": "c6a3480a9123c50f6ff411626d4d704f1a30eb137cd039b439c0546ceac18a67",
+    "/workspace/smart-buildings-research/launch_regularized_v6.py": "a41f9feb7266a313bf5bff9613340650c55b15ba763d56704b829ab49983030f",
+    "/workspace/smart-buildings-research/track_regularized_v6.py": "0d249abd1b9ce84e917bc7f6efe7d0c88eff9b466c3e419ce173a0c424dce34b"
+  },
+  "local_budget_hours": 4,
+  "pipeline_budget_hours": 8
+}

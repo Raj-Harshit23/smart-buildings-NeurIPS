@@ -1,109 +1,93 @@
 # Authorized autonomous experiment scope
 
-**Current evaluation requirement:** the original diagnostic runner was found to
-advance boiler temperature through an extra getter read. All four historical
-campaigns are invalidated for normal-evaluation/submission purposes. Keep their
-records, but rerun qualification using protocol `non_mutating_v2`. A direct
-24-step comparison passed exact observations, actions and rewards against an
-ordinary rollout. The official V0 score remains 0.06404. New campaign comparisons
-and exports reject legacy summaries. No candidate has been submitted.
+The repository owner authorized continued grounded research, implementation,
+testing, validation, promising Kaggle submissions, and iteration while away.
+Network use is limited to research, Kaggle and previously authorized GitHub work.
+Commits use Harshit Raj's configured identity without AI co-author attribution.
+Every model change must refer to [MATHEMATICAL_FRAMEWORK.md](MATHEMATICAL_FRAMEWORK.md)
+and state its mechanism, available information, surrogate and relation to the
+actual comfort/energy/carbon objective. Avoid arbitrary parameter sweeps and
+submissions without supporting evidence.
 
-The fresh campaign is `results/clean-adaptive-v4/`, dispatched by
-`experiments/run_clean_validation.py`. It runs both Fairbanks baseline/candidate
-pairs first alongside the other pilot pairs, at most four concurrent full
-episodes, then delegates the remaining transfer pairs to the existing gate.
-Its total local budget is four hours. Each receipt identifies the controller
-and diagnostic-runner hashes. The prior 99-test suite passed, and the two added
-harness regression tests passed separately; the combined receipt distinguishes
-these test runs. Only fresh `non_mutating_v2` results can qualify a Kaggle export.
+## Actual competition status
 
-Fresh source is frozen at `cb2256a` in
-`/workspace/smart-buildings-research/frozen-clean-adaptive-v4`. The eight-hour
-pipeline `/workspace/smart-buildings-research/prepare_clean_v4.py` waits for
-complete Fairbanks-1 and Phoenix candidate trajectories, then proves frozen
-source/export/recorded-action equivalence. Its artifact is
-`/workspace/smart-buildings-research/kaggle/clean-adaptive-v4`.
-`launch_clean_v4.py` waits for the fresh absolute V0 gate before publishing one
-new private offline notebook. `track_clean_v4.py` requires the output artifact,
-at least 8640 validation steps, and at most 10% regression from V0's matched
-official Atlanta validation loss before one scored entry. It checks allowance
-and persists attempt markers before mutations; ambiguous responses are not
-blindly retried. No candidate entry exists yet.
+- V0 entry **57407757** completed with public score **0.06404**; lower is better.
+- V4 entry **57435234** was submitted on 2026-10-20 at 11:16 UTC and its public
+  score is pending. Private notebook
+  `harshitraj2123221/smart-buildings-adaptive-heating`, version 1, passed the
+  official 8641-action Atlanta training validation with loss 0.02203293,
+  11.5% better than V0 on that same training case.
+- The corrected six-case V4 local comparison improved mean loss by 55.8% over
+  V0, with 13.2% transfer improvement and worst regression 5.7%. These local
+  numbers are distinct from a hidden leaderboard score.
+- V5's paired cooling study improved the two hot-case mean by only 2.1%; it is
+  held from submission. No broader V5 campaign is running.
 
-The separate public-SDK probe completed. Core physical/reward files match
-exactly; environment ASTs match apart from controller registration. Runtime
-delay and units are independently confirmed. See
-[verification](OFFICIAL_SDK_VERIFICATION.md). Direct downloads remain
-proxy-blocked; the authorized private Kaggle probe supplied source hashes and
-the public interface source through its logs.
+[Experiment record](EXPERIMENTS.md) contains the evidence and limitations.
+The bounded V4 score tracker is
+`/workspace/smart-buildings-research/track_clean_v4.py`; its artifact/status is
+`/workspace/smart-buildings-research/kaggle/clean-adaptive-v4/`. Its persisted
+entry ID prevents a duplicate submission. The notebook slug was reconciled
+against exact source after Kaggle derived the initial slug from its title.
 
-The repository owner authorized continued research, implementation, testing,
-validation, promising Kaggle submissions, and iteration while they are away.
-Network use is limited to research, Kaggle, and previously authorized GitHub work.
-Commits use Harshit Raj's configured identity with no AI co-author attribution.
+## Current V6 experiment
 
-Every experiment must have a written physical or mathematical hypothesis and
-refer to [MATHEMATICAL_FRAMEWORK.md](MATHEMATICAL_FRAMEWORK.md). Avoid arbitrary
-parameter sweeps, repeated weak ideas, and submissions without supporting evidence.
+The [permanent-prior prediction-error observer](REGULARIZED_OBSERVER_STUDY.md)
+addresses lost prior information in unexcited model directions. Its actual
+production forecasts exactly reproduce the four-case causal study. The full
+suite passed **120 tests**. Forecast improvement does not establish control gain.
 
-Current bounded campaign:
+Controller source is frozen at **9633fda516c55dc1f3d082a6d1f1560828ac8825** in
+`/workspace/smart-buildings-research/frozen-regularized-heating-v6`.
+The four-hour local campaign runs at most four simultaneous full 8640-action
+candidate episodes under `results/regularized-heating-v6/`. Completed V4
+reference episodes are reused from `results/clean-adaptive-v4/`; they are not
+rerun. The same six public scenarios are used. Require:
 
-1. Check V0 submission `57407757`; preserve its notebook/version and score record.
-2. Compare the first allocator with fresh V0 runs at 8640 steps on three pilot
-   scenarios. Qualify for wider validation only if mean loss improves at least 5%
-   and no individual scenario regresses more than 10%.
-3. If qualified, run three additional building/weather validation pairs and one
-   sensor-band-only ablation. Require overall improvement, validation improvement,
-   bounded regressions and acceptable controller latency before Kaggle validation.
-4. Require passing tests, strict action checks, a pinned source artifact, and
-   successful official gateway validation before a scored candidate submission.
-   Check current Kaggle allowance. Persist a submission-attempt marker before
-   requesting it; reconcile ambiguous responses instead of blindly resubmitting.
-5. Record actual leaderboard scores separately from local results. If scoring
-   remains pending, continue grounded local work without inventing leaderboard
-   feedback or repeatedly submitting the same candidate.
+1. At least 5% pilot improvement over V4 and no pilot regression above 10%.
+2. If the pilot qualifies, complete the transfer cases; require at least 5%
+   combined improvement, nonnegative transfer improvement, no scenario more
+   than 10% worse than V4 and mean action latency below 10 ms.
+3. Before publishing a validation notebook, also require at least 5% combined
+   improvement over V0, nonnegative transfer improvement and no scenario more
+   than 10% worse than V0.
+4. Require matching test/source/runner hashes, strict legal actions and exact
+   source/export/recorded-action equality on two complete distinct trajectories.
+5. Publish at most one new private offline notebook, then require complete
+   official gateway validation, the required output file and at most 10%
+   regression against V0's matched official Atlanta training loss. Check quota
+   and persist an attempt marker before requesting one scored entry.
 
-`smart_buildings.run_allocator_campaign` is a resumable local supervisor with a
-four-hour default budget and at most three concurrent child evaluations. It does
-not access the network or submit entries. Logs, progress, trajectories, source
-snapshots and its qualification decision are under `results/allocator-v1/`.
-The existing V0 status tracker has its own bounded lifetime.
+The separate eight-hour preparation/publishing/tracking pipeline starts at
+`/workspace/smart-buildings-research/prepare_regularized_v6.py`, with subsequent
+`launch_regularized_v6.py` and `track_regularized_v6.py`. Its artifact directory is
+`/workspace/smart-buildings-research/kaggle/regularized-heating-v6/`.
+A failed gate stops publication. Ambiguous publication/submission responses are
+recorded and never blindly retried. Requested title/slug agreement and the
+actual push response ref are checked before tracking. Local source snapshots
+remain immutable while these jobs run.
 
-V1 validation is pinned to detached worktree
-`/workspace/smart-buildings-research/frozen-allocator-v1` at commit `5f53c59`.
-The exported notebook matched 17280 recorded actions across two complete
-different-building trajectories. A separate eight-hour launcher at
-`/workspace/smart-buildings-research/launch_validated_v1.py` waits for the full
-local gate before creating one private, offline validation notebook. It then
-requires official gateway completion before requesting at most one scored entry.
-Attempt markers prevent blind retries after ambiguous network responses.
+## Evaluation validity
 
-The delay-aware observer experiment runs separately in the working checkout;
-it cannot silently change the frozen V1 validation or notebook source.
+The original diagnostic runner read a boiler getter that advances tank
+state on each read. All four older campaigns (`allocator-v1`, `lag-aware-v2`,
+`lag-aware-pid-v3`, `adaptive-heating-v4`) are invalid for normal-evaluation or
+submission qualification. Their records remain historical only; their
+supervisors are stopped. No scored candidate used them. Any earlier claimed
+transfer failure or improvement from those instrumented runs is superseded.
 
-On 2026-10-20 the first scored entry completed at **0.06404**. Both bounded
-allocator campaigns finished. V1 failed transfer. V2 qualified relative to V1,
-but an absolute V0 comparison found a 13.4% regression on building 2 / Fairbanks
-and a 1.3% regression in mean transfer loss; no scored V2 entry was requested.
-See [completed comparisons](EXPERIMENTS.md).
+Only protocol **non_mutating_v2** can qualify a candidate. It reuses the water
+observation and captures the reward response inside `env.step`. A direct
+24-step comparison matched normal observations, actions and rewards exactly;
+two meaningful regression tests guard this behavior. Summaries, exports and
+campaign comparisons reject legacy results and record runner hashes.
 
-The next controlled [observer/PID ablation](LAG_AWARE_PID.md) uses the same
-six scenarios and the original V0 regression threshold. Its supervisor adopts
-four initial full-rollout jobs, then evaluates the remaining transfer cases if
-the pilot qualifies. The full suite passes 92 tests. No source changes to the
-frozen V1/V2 models are included. The reusable offline exporter
-`experiments/build_kaggle_candidate.py` requires a clean committed source,
-matching test/source hashes, and exact exported/source/recorded-action equality
-on two distinct complete trajectories. It has no network side effects.
+The public SDK probe verified physical/reward source hashes, observation delay,
+units and gateway output semantics. See
+[verification](OFFICIAL_SDK_VERIFICATION.md). Complete hidden-evaluator parity and
+the hidden scenario distribution remain unverified. Direct downloads remain
+proxy-blocked; the private offline probe supplied public SDK source through logs.
 
-The next [adaptive heat-demand experiment](ADAPTIVE_HEATING.md) uses the learned
-implicit thermal inverse in place of the fixed heat gain. Its full suite passes
-99 tests. Both Fairbanks cases are fresh simulator runs; cooling trajectories
-are reused only after exact complete causal action replay and verified unchanged
-local dynamics. `experiments/replay_equivalent_policy.py` records this provenance
-explicitly. Its separate four-hour supervisor compares directly with V0 and
-enforces the same transfer gate. Local results remain distinct from public scores.
-
-These processes can continue while their execution environment exists. They do
-not guarantee that model reasoning or new experiment design continues after the
-cloud session terminates.
+These are finite processes that can continue while their execution environment
+exists. They do not guarantee ongoing model reasoning or new experiment design
+after the cloud session terminates.

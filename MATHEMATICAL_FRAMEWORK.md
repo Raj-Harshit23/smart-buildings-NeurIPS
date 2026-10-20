@@ -75,8 +75,9 @@ whole observation vector uniformly.
 In a building-8/Phoenix probe, a maximum-flow cooling action changed the physical
 zone temperature from 294 K to 289.354 K while the returned zone sensor still
 reported 294 K. The next returned sensor reported 289.354 K. The saved probe is
-[here](experiments/observation_delay.json). This verifies the local implementation;
-the hidden SDK's timing has not been independently checked.
+[here](experiments/observation_delay.json). The attached public competition SDK
+independently reproduced the delay; hidden-evaluator parity remains unverified
+(Section 10).
 
 Sources: [sensor refresh and thermal step](smart_buildings/smart_control/simulator/simulator_flexible_floor_plan.py),
 [VAV sensor register](smart_buildings/smart_control/simulator/vav.py),
@@ -148,12 +149,12 @@ occupancy during the reward interval.
 
 Reward zones are physical rooms; action/sensor indices refer to VAV boxes.
 The simulator supports many-to-many servicing, so do not silently identify the
-number of scored rooms with the number $V$ of VAV actuators. The current compact
+number $I_s$ of scored rooms with the number $V$ of VAV actuators. The current compact
 observers use one state per VAV temperature sensor as an approximation. Define
 
 $$
 d_{i,t}=\max\{0,L_{i,t}-T_{i,t},T_{i,t}-U_{i,t}\},
-\qquad N_t=\sum_{i=1}^{V}n_{i,t}.
+\qquad N_t=\sum_{i=1}^{I_s}n_{i,t}.
 $$
 
 $$

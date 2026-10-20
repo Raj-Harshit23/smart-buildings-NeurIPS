@@ -70,6 +70,22 @@ This modest standalone gain is held from submission; no wider V5 campaign is
 being launched. The V4 reference losses reproduce local results on Kaggle
 Python 3.13.15 / NumPy 2.1.3. [Research output](experiments/cooling_inverse_study.json).
 
+## Permanent-prior observer validation
+
+[Design and causal forecast evidence](REGULARIZED_OBSERVER_STUDY.md).
+The production implementation matches all four complete forecast comparisons
+exactly; the full suite passed **120 tests**. A fresh frozen V6 control campaign
+at `9633fda` is running, with the same six public scenarios and V4 as reference.
+The independent absolute V0 regression gate remains in force. No V6 return or
+leaderboard gain is claimed before those runs complete.
+[Source, tests, equivalence and bounded pipeline receipt](experiments/regularized_heating_validation.json).
+
+The next [joint cooling derivation](JOINT_COOLING_DESIGN.md) identifies when colder
+supply can reduce both fan and chiller electricity at fixed room targets and
+why minimum airflow prevents applying that rule everywhere. Its conditional
+algebra was checked on 10000 generated feasible cases and a floor-induced
+counterexample; this is not a control-performance result.
+
 ## Measured remaining limitations
 
 [Fresh diagnostics](experiments/fresh_control_diagnostics.json):

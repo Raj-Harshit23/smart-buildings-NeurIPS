@@ -1,0 +1,21 @@
+{
+  "scope": "Algebraic public-model check; no rollout, control gain or hidden performance claim",
+  "basis": "JOINT_COOLING_DESIGN.md; MATHEMATICAL_FRAMEWORK.md Sections 3,4,7,9",
+  "random_seed": 20261020,
+  "conditional_cases_checked": 10000,
+  "all_flow_floors_and_caps_nonbinding": true,
+  "colder_supply_fan_nonincrease": true,
+  "colder_supply_cooling_electricity_nonincrease": true,
+  "maximum_derivative_error_w_per_k": 7.927656042738818e-08,
+  "floor_counterexample": {
+    "pressure_pa": 200,
+    "design_flow_m3_s": 2,
+    "minimum_flow_m3_s": 0.0632455532033676,
+    "gamma_per_m3_s": 0.5,
+    "free_temperature_k": 294.1,
+    "lower_band_k": 294,
+    "predicted_at_285k_supply_k": 293.8210537867114,
+    "predicted_at_293k_supply_k": 294.0662812269651
+  },
+  "document_sha256": "90625e056740c9ba6bdc870fdbc77fef2e2b5c5509a593c2f69a00a141c99af9"
+}
