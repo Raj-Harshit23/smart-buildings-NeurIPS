@@ -1,0 +1,233 @@
+{
+  "pilot": {
+    "rows": [
+      {
+        "scenario": "building_train_1/fairbanks_1",
+        "baseline_loss": 0.21387481697765065,
+        "candidate_loss": 0.10043117071517861,
+        "relative_improvement": 0.5304207754124068,
+        "baseline_components": {
+          "comfort": 0.11585020273923874,
+          "energy": 0.2757670283317566,
+          "carbon": 0.44605642557144165
+        },
+        "candidate_components": {
+          "comfort": 0.06023991107940674,
+          "energy": 0.09824955463409424,
+          "carbon": 0.22318655252456665
+        },
+        "candidate_policy_ms": 5.601245042246909
+      },
+      {
+        "scenario": "building_train_5/singapore_4",
+        "baseline_loss": 0.10944236575984563,
+        "candidate_loss": 0.026034787505973295,
+        "relative_improvement": 0.7621141746597235,
+        "baseline_components": {
+          "comfort": 0.10537171363830566,
+          "energy": 0.15303558111190796,
+          "carbon": 0.07806112617254257
+        },
+        "candidate_components": {
+          "comfort": 0.029967544600367546,
+          "energy": 0.03266167640686035,
+          "carbon": 0.007609628606587648
+        },
+        "candidate_policy_ms": 6.7841650827410325
+      },
+      {
+        "scenario": "building_train_8/phoenix_4",
+        "baseline_loss": 0.1693046171031013,
+        "candidate_loss": 0.03947549292612771,
+        "relative_improvement": 0.7668374696356429,
+        "baseline_components": {
+          "comfort": 0.16201911866664886,
+          "energy": 0.250986248254776,
+          "carbon": 0.10947946459054947
+        },
+        "candidate_components": {
+          "comfort": 0.036765433847904205,
+          "energy": 0.07069864869117737,
+          "carbon": 0.016382521018385887
+        },
+        "candidate_policy_ms": 2.4642236686281227
+      }
+    ],
+    "baseline_mean": 0.16420726661353252,
+    "candidate_mean": 0.05531381704909321,
+    "relative_improvement": 0.663146350403139,
+    "worst_relative_improvement": 0.5304207754124068
+  },
+  "validation": {
+    "rows": [
+      {
+        "scenario": "building_train_2/fairbanks_2",
+        "baseline_loss": 0.07945104593520534,
+        "candidate_loss": 0.0900628300548135,
+        "relative_improvement": -0.13356380642568721,
+        "baseline_components": {
+          "comfort": 0.10061147809028625,
+          "energy": 0.03663311526179314,
+          "carbon": 0.058787669986486435
+        },
+        "candidate_components": {
+          "comfort": 0.08439041674137115,
+          "energy": 0.07204056531190872,
+          "carbon": 0.12510232627391815
+        },
+        "candidate_policy_ms": 7.935561798377143
+      },
+      {
+        "scenario": "building_train_4/atlanta_5",
+        "baseline_loss": 0.028939180653725315,
+        "candidate_loss": 0.030576540058090615,
+        "relative_improvement": -0.05657932834924706,
+        "baseline_components": {
+          "comfort": 0.031028874218463898,
+          "energy": 0.04180867597460747,
+          "carbon": 0.009800598956644535
+        },
+        "candidate_components": {
+          "comfort": 0.0358559712767601,
+          "energy": 0.036741532385349274,
+          "carbon": 0.008573248982429504
+        },
+        "candidate_policy_ms": 4.173254595721793
+      },
+      {
+        "scenario": "building_train_7/denver_5",
+        "baseline_loss": 0.03627489158640858,
+        "candidate_loss": 0.025927850027619253,
+        "relative_improvement": 0.2852397652007357,
+        "baseline_components": {
+          "comfort": 0.040137115865945816,
+          "energy": 0.044922810047864914,
+          "carbon": 0.01604030467569828
+        },
+        "candidate_components": {
+          "comfort": 0.03267578408122063,
+          "energy": 0.025375619530677795,
+          "carbon": 0.006236273795366287
+        },
+        "candidate_policy_ms": 2.5014295767429453
+      }
+    ],
+    "baseline_mean": 0.04822170605844641,
+    "candidate_mean": 0.04885574004684112,
+    "relative_improvement": -0.01314831100389191,
+    "worst_relative_improvement": -0.13356380642568721
+  },
+  "combined": {
+    "rows": [
+      {
+        "scenario": "building_train_1/fairbanks_1",
+        "baseline_loss": 0.21387481697765065,
+        "candidate_loss": 0.10043117071517861,
+        "relative_improvement": 0.5304207754124068,
+        "baseline_components": {
+          "comfort": 0.11585020273923874,
+          "energy": 0.2757670283317566,
+          "carbon": 0.44605642557144165
+        },
+        "candidate_components": {
+          "comfort": 0.06023991107940674,
+          "energy": 0.09824955463409424,
+          "carbon": 0.22318655252456665
+        },
+        "candidate_policy_ms": 5.601245042246909
+      },
+      {
+        "scenario": "building_train_5/singapore_4",
+        "baseline_loss": 0.10944236575984563,
+        "candidate_loss": 0.026034787505973295,
+        "relative_improvement": 0.7621141746597235,
+        "baseline_components": {
+          "comfort": 0.10537171363830566,
+          "energy": 0.15303558111190796,
+          "carbon": 0.07806112617254257
+        },
+        "candidate_components": {
+          "comfort": 0.029967544600367546,
+          "energy": 0.03266167640686035,
+          "carbon": 0.007609628606587648
+        },
+        "candidate_policy_ms": 6.7841650827410325
+      },
+      {
+        "scenario": "building_train_8/phoenix_4",
+        "baseline_loss": 0.1693046171031013,
+        "candidate_loss": 0.03947549292612771,
+        "relative_improvement": 0.7668374696356429,
+        "baseline_components": {
+          "comfort": 0.16201911866664886,
+          "energy": 0.250986248254776,
+          "carbon": 0.10947946459054947
+        },
+        "candidate_components": {
+          "comfort": 0.036765433847904205,
+          "energy": 0.07069864869117737,
+          "carbon": 0.016382521018385887
+        },
+        "candidate_policy_ms": 2.4642236686281227
+      },
+      {
+        "scenario": "building_train_2/fairbanks_2",
+        "baseline_loss": 0.07945104593520534,
+        "candidate_loss": 0.0900628300548135,
+        "relative_improvement": -0.13356380642568721,
+        "baseline_components": {
+          "comfort": 0.10061147809028625,
+          "energy": 0.03663311526179314,
+          "carbon": 0.058787669986486435
+        },
+        "candidate_components": {
+          "comfort": 0.08439041674137115,
+          "energy": 0.07204056531190872,
+          "carbon": 0.12510232627391815
+        },
+        "candidate_policy_ms": 7.935561798377143
+      },
+      {
+        "scenario": "building_train_4/atlanta_5",
+        "baseline_loss": 0.028939180653725315,
+        "candidate_loss": 0.030576540058090615,
+        "relative_improvement": -0.05657932834924706,
+        "baseline_components": {
+          "comfort": 0.031028874218463898,
+          "energy": 0.04180867597460747,
+          "carbon": 0.009800598956644535
+        },
+        "candidate_components": {
+          "comfort": 0.0358559712767601,
+          "energy": 0.036741532385349274,
+          "carbon": 0.008573248982429504
+        },
+        "candidate_policy_ms": 4.173254595721793
+      },
+      {
+        "scenario": "building_train_7/denver_5",
+        "baseline_loss": 0.03627489158640858,
+        "candidate_loss": 0.025927850027619253,
+        "relative_improvement": 0.2852397652007357,
+        "baseline_components": {
+          "comfort": 0.040137115865945816,
+          "energy": 0.044922810047864914,
+          "carbon": 0.01604030467569828
+        },
+        "candidate_components": {
+          "comfort": 0.03267578408122063,
+          "energy": 0.025375619530677795,
+          "carbon": 0.006236273795366287
+        },
+        "candidate_policy_ms": 2.5014295767429453
+      }
+    ],
+    "baseline_mean": 0.10621448633598947,
+    "candidate_mean": 0.05208477854796716,
+    "relative_improvement": 0.5096264140165702,
+    "worst_relative_improvement": -0.13356380642568721
+  },
+  "interpretation": "Local six-case full-horizon evaluation; not a hidden leaderboard estimate",
+  "absolute_v0_gate_passed": false,
+  "decision": "Hold scored V2 submission: building 2 Fairbanks exceeds absolute V0 regression threshold"
+}

@@ -45,6 +45,7 @@ from smart_buildings.baselines.pid import PIDPolicy
 # imported here.
 from smart_buildings.baselines.pid_plus import PIDWaterResetPolicy
 from smart_buildings.baselines.lag_aware_allocator import LagAwareAllocatorPolicy
+from smart_buildings.baselines.lag_aware_pid import LagAwarePIDPolicy
 from smart_buildings.baselines.thermal_allocator import ThermalAllocatorPolicy
 from smart_buildings.baselines.transfer_policy import TransferPolicy
 
@@ -99,6 +100,7 @@ POLICY_MAP: dict[str, type[Any]] = {
     "pid_water": PIDWaterResetPolicy,
     "thermal_allocator": ThermalAllocatorPolicy,
     "lag_aware_allocator": LagAwareAllocatorPolicy,
+    "lag_aware_pid": LagAwarePIDPolicy,
     # Runnable reference, not part of the baseline set.
     "all_off": AllOffPolicy,
 }

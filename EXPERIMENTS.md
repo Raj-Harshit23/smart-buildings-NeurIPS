@@ -4,7 +4,8 @@
 
 - Kaggle notebook: `harshitraj2123221/smart-buildings-basic-v0-pid-water`, version 1.
 - Submission: `57407757`, submitted 2026-10-19 at 19:55 UTC.
-- Latest check during this implementation: pending, public score absent, no error.
+- Confirmed 2026-10-20 09:25 UTC: **COMPLETE, public score 0.06404**.
+- [Scored baseline record](experiments/kaggle_baseline.json).
 - Official training validation: 8641 reported steps, return -215.2204509578005.
   This is not a leaderboard score.
 
@@ -29,12 +30,16 @@ Fresh 8640-step pilot comparisons are complete:
 
 Mean pilot loss improved by about 19.1%. All three components improved in
 Fairbanks; Singapore barely changed. Three additional validation pairs and the
-sensor-band ablation are running from frozen commit `5f53c59`. Fresh results
+sensor-band ablation completed from frozen commit `5f53c59`. Fresh results
 differ from stored `baseline_returns.json`; compare candidates against fresh
 matched runs rather than attributing that difference to an unverified cause.
 
-No candidate leaderboard improvement is claimed before scored evaluation.
-Completed campaign comparisons will be added here after qualification.
+V1 failed the transfer gate: building 2 / Fairbanks regressed 72.5%, Atlanta
+0.6% and Denver 1.9%. Mean transfer loss regressed 40.4%, despite a 5.6% mean
+improvement across all six cases. The launcher therefore published no V1
+notebook and submitted no V1 entry. The Singapore sensor-band-only ablation
+exactly reproduced V1's mean components and loss; its small gain is not evidence
+for the heating allocation mechanism.
 
 ## Next modeling finding: sensor timing
 
@@ -56,5 +61,57 @@ not a deployable forecast-performance claim.
 The first full 8640-step local Phoenix/building-8 run returned -341.0682588817434,
 mean loss **0.03947549**. That is a 76.7% reduction from fresh V0 and 74.6% from
 the first allocator. Comfort/energy/carbon means were 0.03676543 / 0.07069865 /
-0.01638252. Mean controller time was 2.46 ms/action in this run. Fairbanks and
-Singapore comparisons are running; transfer performance is not yet established.
+0.01638252. Mean controller time was 2.46 ms/action in this run.
+
+All six 8640-step comparisons are now complete:
+
+| Building / climate | V0 loss | V1 loss | V2 loss | V2 change from V0 |
+| --- | ---: | ---: | ---: | ---: |
+| 1 / Fairbanks | 0.21387482 | 0.13391418 | 0.10043117 | 53.0% better |
+| 5 / Singapore | 0.10944237 | 0.10904646 | 0.02603479 | 76.2% better |
+| 8 / Phoenix | 0.16930462 | 0.15549259 | 0.03947549 | 76.7% better |
+| 2 / Fairbanks | 0.07945105 | 0.13705198 | 0.09006283 | 13.4% worse |
+| 4 / Atlanta | 0.02893918 | 0.02911322 | 0.03057654 | 5.7% worse |
+| 7 / Denver | 0.03627489 | 0.03696271 | 0.02592785 | 28.5% better |
+| **Mean** | **0.10621449** | **0.10026352** | **0.05208478** | **51.0% better** |
+
+V2 passed the supervisor's comparison against V1, improving the six-case mean
+48.1%. However, an additional comparison against the original V0 rejects a
+scored submission: the worst regression exceeds 10% and mean transfer loss
+regresses 1.3%. Beating the failed V1 controller is insufficient qualification.
+The official objective is the scenario mean; this regression threshold is our
+predeclared experiment gate, not a competition constraint.
+
+[Machine-readable full comparison](experiments/allocator_comparison.json).
+These local means must not be compared numerically with V0's 0.06404 public
+score as if they came from the same evaluation distribution.
+
+## Observer measurement and next ablation
+
+Replaying every action exactly on completed V2 trajectories yields:
+
+| Scenario | Stale sensor MAE | Causal observer MAE | Stale sensor p99 | Observer p99 |
+| --- | ---: | ---: | ---: | ---: |
+| 8 / Phoenix | 0.593 K | 0.179 K | 3.693 K | 2.205 K |
+| 2 / Fairbanks | 1.085 K | 0.909 K | 10.187 K | 9.889 K |
+
+The next observed temperature is used solely as an offline current-state label
+under the verified local sensor delay. It never enters the action calculation.
+The small mean correction cap and weak model confidence leave substantial
+Fairbanks tail error. These results are distinct from the conditional offline
+thermal-core fit, which assumes known physical starting state.
+
+[Observer evaluation record](experiments/observer_evaluation.json).
+The conditional pump-pressure saving estimate is only 0.84 W in Phoenix and
+183 W in Fairbanks, so pump symmetry is not the next priority.
+
+V2's Fairbanks comfort component improves from 0.10061 to 0.08439, but its
+energy/carbon components approximately double. The next controlled ablation
+retains the observer and replaces heating allocation with the original PID
+actuator law. See [design and unchanged qualification gate](LAG_AWARE_PID.md).
+Its full-rollout results are pending; no new candidate public score is claimed.
+The expanded suite passed **92 tests** (14 existing warnings), including exact
+observer equivalence when both variants use the same actuator law, correct
+two-call action/label alignment, reset, bounded unexcited covariance, and delivery
+of the corrected state to PID. Test receipt and source hashes are retained in
+`results/lag-aware-pid-v3/tests.json`.

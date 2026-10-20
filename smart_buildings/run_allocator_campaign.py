@@ -67,7 +67,7 @@ def main():
     parser.add_argument("--workers", type=int, default=3)
     parser.add_argument("--hours", type=float, default=4)
     parser.add_argument("--baseline", choices=["pid_water", "thermal_allocator"], default="pid_water")
-    parser.add_argument("--candidate", choices=["thermal_allocator", "lag_aware_allocator"], default="thermal_allocator")
+    parser.add_argument("--candidate", choices=["thermal_allocator", "lag_aware_allocator", "lag_aware_pid"], default="thermal_allocator")
     parser.add_argument("--reference-root", type=Path,
                         help="Reuse completed matched reference runs; never relaunch reference jobs")
     parser.add_argument("--skip-ablation", action="store_true")
@@ -79,6 +79,7 @@ def main():
     fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
     state_path = args.root / "campaign.json"
     previous = load(state_path)
+    previous_running = dict(previous.get("running", {})) if previous else {}
     if previous and previous.get("stage") in ("qualified_for_kaggle_validation", "rejected", "failed"):
         print(json.dumps(previous), flush=True)
         return
@@ -96,6 +97,7 @@ def main():
                          "authorization": "User authorized autonomous grounded experiments and validation",
                          "gate": "Pilot mean improves >=5%; no scenario regresses >10%; then validate three additional pairs",
                          "network_actions": "None; Kaggle packaging/submission requires a separate validated artifact"}
+    state["supervisor_pid"] = os.getpid()
     deadline = time.monotonic() + args.hours * 3600
     running = {}
     try:
@@ -104,21 +106,25 @@ def main():
             if hashlib.sha256(source_path.read_bytes()).hexdigest() != source_hash:
                 state.update(stage="failed", error="Controller source changed during campaign")
                 break
-            if previous and previous.get("running"):
+            if previous_running:
                 live_previous = {}
-                for key, pid in previous["running"].items():
+                for key, pid in previous_running.items():
                     try:
                         command = Path(f"/proc/{pid}/cmdline").read_bytes().decode().split("\0")
                     except (FileNotFoundError, PermissionError):
-                        continue
+                        command = []
                     if "smart_buildings.diagnose_policy" in command and key in command:
                         live_previous[key] = pid
+                    elif load(Path(key) / "summary.json") is None:
+                        state.update(stage="failed", error=f"Previous evaluation ended without a complete result: {key}")
+                        raise RuntimeError(f"Previous evaluation ended without a complete result: {key}")
+                previous_running = live_previous
                 if live_previous:
                     state.update(stage="waiting_for_previous_children", running=live_previous)
                     write(state_path, state)
                     time.sleep(30)
                     continue
-                previous["running"] = {}
+                state["running"] = {}
             pilot = compare(args.root, PILOT, policies, args.reference_root)
             if pilot is None:
                 write(state_path, state)
@@ -137,7 +143,8 @@ def main():
             tasks = [(scenario, policy, False) for scenario in VALIDATION for policy in policies
                      if policy == args.candidate or args.reference_root is None]
             if not args.skip_ablation:
-                tasks.append((PILOT[1], args.baseline, True))
+                # This is the slow case; overlap it with the validation pairs.
+                tasks.insert(0, (PILOT[1], args.baseline, True))
             for key, (process, stream) in list(running.items()):
                 if process.poll() is not None:
                     stream.close()

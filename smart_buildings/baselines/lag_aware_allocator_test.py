@@ -6,6 +6,7 @@ import numpy as np
 import pytest
 
 from smart_buildings.baselines.lag_aware_allocator import LagAwareAllocatorPolicy
+from smart_buildings.baselines.lag_aware_pid import LagAwarePIDPolicy
 from smart_buildings.evaluate import create_building_meta_data, load_hybrid_environment
 
 
@@ -18,9 +19,10 @@ def data():
     return metadata, env.action_spec(), obs
 
 
-def test_identification_uses_action_two_calls_before_observed_label(data):
+@pytest.mark.parametrize("policy_type", [LagAwareAllocatorPolicy, LagAwarePIDPolicy])
+def test_identification_uses_action_two_calls_before_observed_label(data, policy_type):
     metadata, spec, original = data
-    policy = LagAwareAllocatorPolicy(metadata, spec)
+    policy = policy_type(metadata, spec)
     obs = original.copy()
     for i, name in enumerate(metadata["observation_field_names"]):
         if name.endswith("outside_air_temperature_sensor"):
@@ -42,9 +44,10 @@ def test_identification_uses_action_two_calls_before_observed_label(data):
     np.testing.assert_array_equal(captured[1], second["discrete_action"])
 
 
-def test_unexcited_estimation_stays_finite_and_covariance_bounded(data):
+@pytest.mark.parametrize("policy_type", [LagAwareAllocatorPolicy, LagAwarePIDPolicy])
+def test_unexcited_estimation_stays_finite_and_covariance_bounded(data, policy_type):
     metadata, spec, obs = data
-    policy = LagAwareAllocatorPolicy(metadata, spec)
+    policy = policy_type(metadata, spec)
     for _ in range(2048):
         result = policy.get_action(obs)
         for key, value in result.items():
@@ -58,9 +61,10 @@ def test_unexcited_estimation_stays_finite_and_covariance_bounded(data):
     assert np.isfinite(policy._theta).all()
 
 
-def test_reset_clears_delayed_command_queue(data):
+@pytest.mark.parametrize("policy_type", [LagAwareAllocatorPolicy, LagAwarePIDPolicy])
+def test_reset_clears_delayed_command_queue(data, policy_type):
     metadata, spec, obs = data
-    policy = LagAwareAllocatorPolicy(metadata, spec)
+    policy = policy_type(metadata, spec)
     first = policy.get_action(obs)
     policy.get_action(obs)
     policy.get_action(obs)

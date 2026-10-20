@@ -1,0 +1,52 @@
+{
+  "phoenix_building_8": {
+    "scenario": "smart_buildings/training_scenarios/building_train_8/phoenix_4",
+    "actions_replayed_exactly": 8640,
+    "scope": "Causal replay; future sensor values are offline current-temperature labels only",
+    "estimation": {
+      "whole_episode": {
+        "stale_sensor_mae_k": 0.5930572748184204,
+        "observer_mae_k": 0.17921040952205658,
+        "stale_sensor_p99_k": 3.6933765411376953,
+        "observer_p99_k": 2.2046871185302734
+      },
+      "after_one_day": {
+        "stale_sensor_mae_k": 0.6047855019569397,
+        "observer_mae_k": 0.17885957658290863,
+        "stale_sensor_p99_k": 3.720086097717285,
+        "observer_p99_k": 2.224151611328125
+      }
+    },
+    "mean_observer_weight": 0.9689750765887833,
+    "conditional_hydraulic_opportunity": {
+      "assumptions": "Zero header resistance, unchanged water flow, current pump-efficiency prior; not measured score improvement",
+      "mean_pump_power_w": 1.7594884665105732,
+      "mean_potential_saving_w": 0.8359820820905528
+    }
+  },
+  "fairbanks_building_2": {
+    "scenario": "smart_buildings/training_scenarios/building_train_2/fairbanks_2",
+    "actions_replayed_exactly": 8640,
+    "scope": "Causal replay; future sensor values are offline current-temperature labels only",
+    "estimation": {
+      "whole_episode": {
+        "stale_sensor_mae_k": 1.0852583646774292,
+        "observer_mae_k": 0.9090401530265808,
+        "stale_sensor_p99_k": 10.187450408935547,
+        "observer_p99_k": 9.888755798339844
+      },
+      "after_one_day": {
+        "stale_sensor_mae_k": 1.1008650064468384,
+        "observer_mae_k": 0.9233152866363525,
+        "stale_sensor_p99_k": 10.229991912841797,
+        "observer_p99_k": 9.939456939697266
+      }
+    },
+    "mean_observer_weight": 0.34428294786613456,
+    "conditional_hydraulic_opportunity": {
+      "assumptions": "Zero header resistance, unchanged water flow, current pump-efficiency prior; not measured score improvement",
+      "mean_pump_power_w": 2260.171183738647,
+      "mean_potential_saving_w": 182.85720827154947
+    }
+  }
+}

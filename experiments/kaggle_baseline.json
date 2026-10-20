@@ -1,0 +1,13 @@
+{
+  "ref": 57407757,
+  "date": "2026-10-19T19:55:16.917Z",
+  "description": "Basic V0 pid_water | 23a4560df0e2 | be4ac7f586f3 | kernel v1",
+  "status": "COMPLETE",
+  "publicScore": "0.06404",
+  "errorDescription": null,
+  "url": "/code/harshitraj2123221/smart-buildings-basic-v0-pid-water?scriptVersionId=360173605",
+  "checked_at": "2026-10-20T09:25:45.384689+00:00",
+  "competition": "neurips-2026-smart-buildings",
+  "kernel_ref": "harshitraj2123221/smart-buildings-basic-v0-pid-water",
+  "kernel_version": 1
+}

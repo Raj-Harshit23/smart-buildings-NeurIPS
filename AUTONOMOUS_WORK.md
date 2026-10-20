@@ -44,6 +44,21 @@ Attempt markers prevent blind retries after ambiguous network responses.
 The delay-aware observer experiment runs separately in the working checkout;
 it cannot silently change the frozen V1 validation or notebook source.
 
+On 2026-10-20 the first scored entry completed at **0.06404**. Both bounded
+allocator campaigns finished. V1 failed transfer. V2 qualified relative to V1,
+but an absolute V0 comparison found a 13.4% regression on building 2 / Fairbanks
+and a 1.3% regression in mean transfer loss; no scored V2 entry was requested.
+See [completed comparisons](EXPERIMENTS.md).
+
+The next controlled [observer/PID ablation](LAG_AWARE_PID.md) uses the same
+six scenarios and the original V0 regression threshold. Its supervisor adopts
+four initial full-rollout jobs, then evaluates the remaining transfer cases if
+the pilot qualifies. The full suite passes 92 tests. No source changes to the
+frozen V1/V2 models are included. The reusable offline exporter
+`experiments/build_kaggle_candidate.py` requires a clean committed source,
+matching test/source hashes, and exact exported/source/recorded-action equality
+on two distinct complete trajectories. It has no network side effects.
+
 These processes can continue while their execution environment exists. They do
 not guarantee that model reasoning or new experiment design continues after the
 cloud session terminates.
