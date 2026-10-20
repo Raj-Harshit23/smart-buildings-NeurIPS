@@ -1,0 +1,23 @@
+[
+  {
+    "source_url": "https://www.kaggle.com/code/avikdas567/cross-building-adaptive-thermodynamic-hvac-control",
+    "sha256": "150ade4a8a4e9743e6d56f00dc8217db02c99ef0fbb4423e43ce59c77a4f1659",
+    "bytes": 38132,
+    "execution": "Not executed",
+    "implementation_reuse": "None"
+  },
+  {
+    "source_url": "https://www.kaggle.com/code/malyshevdanil/smart-buildings-probe-zone-pi-k10",
+    "sha256": "560038c6434836077015c264f460164c1cb9eaa793c703e377a904a8dbeb9078",
+    "bytes": 57077,
+    "execution": "Not executed",
+    "implementation_reuse": "None"
+  },
+  {
+    "source_url": "https://www.kaggle.com/code/mdmahfujulkarim/smart-buildings-zone-pi-hold",
+    "sha256": "616af4633eb7f702e4db5d2a351d19318165c5f44943397ea78c5c3483b1c350",
+    "bytes": 56623,
+    "execution": "Not executed",
+    "implementation_reuse": "None"
+  }
+]
