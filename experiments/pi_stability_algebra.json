@@ -1,0 +1,21 @@
+{
+  "scope": "Algebra check for the stated scalar linearizations, not a nonlinear building-stability or performance proof",
+  "pole_placement_cases": 12,
+  "maximum_target_pole_error": 1.3183898417423734e-15,
+  "maximum_delayed_characteristic_coefficient_error": 1.9984014443252818e-15,
+  "robust_box_grid_points": 441,
+  "robust_box_maximum_spectral_radius": 0.9988912188309181,
+  "robust_box": {
+    "alpha": [
+      0.1,
+      0.9
+    ],
+    "beta": [
+      0.1,
+      10.0
+    ],
+    "kp": 0.02,
+    "ki": 0.01
+  },
+  "jury_condition": "beta_max*(2*kp+ki)<2*(1+alpha_min)"
+}

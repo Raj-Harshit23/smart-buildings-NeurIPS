@@ -11,11 +11,22 @@ The official Kaggle baseline score is unaffected. Fresh comparisons use protocol
 an ordinary 24-step rollout. Both the exporter and campaign reject legacy runs.
 See [side-effect proof](experiments/diagnostic_side_effect.json).
 
-The historical occupancy breakdown also treated a positive normalized occupancy
-signal as occupied. With this runner's normalizer, that threshold means more
-than 125 occupants; it is not the zero-occupancy threshold. Historical power
-figures described as occupied-time below are therefore high-occupancy diagnostics,
-not an exact occupied/unoccupied partition. Policy code does not use that split.
+The initial occupancy diagnosis also needed correction: the evaluator's private
+125 assignment is unused; the observation reads a public normalizer whose actual
+value is zero in this configuration. Thus the local occupancy signal is a raw
+count, and a positive signal does indicate occupants. Boundary intervals can still
+differ between current observations and interval reward occupancy. Policy code
+does not use this split. The framework now distinguishes the real normalizer
+from the unused attribute.
+
+The fresh `clean-adaptive-v4` campaign uses frozen `cb2256a` source and matching
+8640-action runs. The first complete pair is building 1 / Fairbanks:
+V0 loss **0.21392442**, adaptive loss **0.08664817**, a **59.5% reduction**.
+Comfort/energy/carbon each improve: 0.11691094 / 0.27506530 / 0.44382396 becomes
+0.05764604 / 0.07703393 / 0.18326882. Other cases remain in progress; this is one
+local case, not a public score. An independent private Kaggle probe confirmed
+public SDK physics, interface semantics, timing and units:
+[verification](OFFICIAL_SDK_VERIFICATION.md).
 
 ## First scored baseline
 

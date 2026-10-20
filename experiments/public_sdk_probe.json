@@ -1,0 +1,155 @@
+{
+  "SDK_META": {
+    "n_continuous": 92,
+    "n_discrete": 5,
+    "sample_observations": {
+      "ahs_ahu_1_outside_air_temperature_sensor": 275.6499938964844,
+      "ahs_ahu_2_outside_air_temperature_sensor": 275.6499938964844,
+      "ahs_ahu_3_outside_air_temperature_sensor": 275.6499938964844,
+      "ahs_ahu_4_outside_air_temperature_sensor": 275.6499938964844,
+      "hws_supply_water_temperature_sensor": 340.0,
+      "num_occupants": 0.0
+    },
+    "zone_normalizer": {
+      "sample_mean": 295.0,
+      "sample_variance": 25.0,
+      "sample_std": 5.0
+    },
+    "action_pressure_fields": {
+      "ahu_1_supply_air_static_pressure_setpoint": {
+        "min_native_value": 0.0,
+        "max_native_value": 2000.0,
+        "min_normalized_value": -1.0,
+        "max_normalized_value": 1.0
+      },
+      "ahu_2_supply_air_static_pressure_setpoint": {
+        "min_native_value": 0.0,
+        "max_native_value": 2000.0,
+        "min_normalized_value": -1.0,
+        "max_normalized_value": 1.0
+      },
+      "ahu_3_supply_air_static_pressure_setpoint": {
+        "min_native_value": 0.0,
+        "max_native_value": 2000.0,
+        "min_normalized_value": -1.0,
+        "max_normalized_value": 1.0
+      },
+      "ahu_4_supply_air_static_pressure_setpoint": {
+        "min_native_value": 0.0,
+        "max_native_value": 2000.0,
+        "min_normalized_value": -1.0,
+        "max_normalized_value": 1.0
+      },
+      "differential_pressure_setpoint": {
+        "min_native_value": 0.0,
+        "max_native_value": 20.0,
+        "min_normalized_value": -1.0,
+        "max_normalized_value": 1.0
+      }
+    }
+  },
+  "SDK_TIMING": [
+    {
+      "step": 0,
+      "sensor_k": 294.0,
+      "physical_k": 294.0
+    },
+    {
+      "step": 1,
+      "sensor_k": 294.0,
+      "physical_k": 289.44732905334325,
+      "reward": -0.1338045299053192
+    },
+    {
+      "step": 2,
+      "sensor_k": 289.44732666015625,
+      "physical_k": 288.3455842257185,
+      "reward": -0.1228821873664856
+    }
+  ],
+  "hashes": [
+    {
+      "file": "smart_buildings/evaluate.py",
+      "sha256": "947c968ce3a891da8334b7504ac0e7b45bd14fe13400f0136df49825d5247792",
+      "bytes": 31874,
+      "local_sha256": "4ba508060c702308a6a21ebf2fe0c6620b08f17f5993beefb3b5268c49082262",
+      "matches_local": false
+    },
+    {
+      "file": "smart_buildings/smart_control/environment/environment.py",
+      "sha256": "703addb6e3d489bef98552a14792a5853201c0673c0f7db0c535372818758021",
+      "bytes": 65187,
+      "local_sha256": "3b45c14942f38a681d007a8ba9197262d13d598e7904d6f05e1838020853229e",
+      "matches_local": false
+    },
+    {
+      "file": "smart_buildings/smart_control/environment/hybrid_action_environment.py",
+      "sha256": "8e783272d58a821721712d894e2160e13ac94378db9908c285392d0e31a4b9c5",
+      "bytes": 9374,
+      "local_sha256": "46da6f47c0325c80f375873f6dcbfab552922a8b82d9e7e2df100d5bfe972f73",
+      "matches_local": false
+    },
+    {
+      "file": "smart_buildings/smart_control/simulator/boiler.py",
+      "sha256": "fb9e8bb7131217a7b0f9b8d0fa6771d4be0a5a6fafe8aef87272ef7f8f44df1d",
+      "bytes": 10505,
+      "local_sha256": "fb9e8bb7131217a7b0f9b8d0fa6771d4be0a5a6fafe8aef87272ef7f8f44df1d",
+      "matches_local": true
+    },
+    {
+      "file": "smart_buildings/smart_control/simulator/vav.py",
+      "sha256": "8c80a101049ab09cfee6b99a928865415acc3b5feb7456a410c07da608c75378",
+      "bytes": 21617,
+      "local_sha256": "8c80a101049ab09cfee6b99a928865415acc3b5feb7456a410c07da608c75378",
+      "matches_local": true
+    },
+    {
+      "file": "smart_buildings/smart_control/simulator/simulator_flexible_floor_plan.py",
+      "sha256": "689ada7fd7af368dd03c95b33bc819f5c3e6998355304677da4e59f51a14eb8f",
+      "bytes": 36246,
+      "local_sha256": "689ada7fd7af368dd03c95b33bc819f5c3e6998355304677da4e59f51a14eb8f",
+      "matches_local": true
+    },
+    {
+      "file": "smart_buildings/smart_control/simulator/finite_difference_solver.py",
+      "sha256": "5a687a8bff05b5a1e7ca5c20ec3014cf5e48d6801cbe88f552d6fd5c60ec19c9",
+      "bytes": 42433,
+      "local_sha256": "5a687a8bff05b5a1e7ca5c20ec3014cf5e48d6801cbe88f552d6fd5c60ec19c9",
+      "matches_local": true
+    },
+    {
+      "file": "smart_buildings/smart_control/reward/setpoint_energy_carbon_regret.py",
+      "sha256": "0758a00c838b58778f7845f1cd8ed7f0ba389699426151f40cb43861a4ea6b1e",
+      "bytes": 13934,
+      "local_sha256": "0758a00c838b58778f7845f1cd8ed7f0ba389699426151f40cb43861a4ea6b1e",
+      "matches_local": true
+    }
+  ],
+  "completed": true,
+  "kernel_ref": "harshitraj2123221/smart-buildings-sdk-parity-probe",
+  "kernel_version": 2,
+  "scope": "Public attached competition SDK only; hidden evaluator distribution and exact revision remain unverified",
+  "interface_review": {
+    "kernel_version": 3,
+    "files": [
+      {
+        "file": "smart_buildings/evaluate.py",
+        "ast_equivalent": true,
+        "permitted_exclusions": "Policy imports and dispatch only"
+      },
+      {
+        "file": "smart_buildings/smart_control/environment/environment.py",
+        "ast_equivalent": true,
+        "permitted_exclusions": "None; comments/formatting are not AST nodes"
+      },
+      {
+        "file": "smart_buildings/smart_control/environment/hybrid_action_environment.py",
+        "ast_equivalent": true,
+        "permitted_exclusions": "None; comments/formatting are not AST nodes"
+      }
+    ],
+    "resolved": true,
+    "occupancy_normalizer_default": 0.0,
+    "private_occupancy_override_has_effect": false
+  }
+}

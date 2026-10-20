@@ -30,8 +30,9 @@ recirculation cap and an AHU that cannot heat its mixed inlet.
 
 The first notebook decodes an AHU weather field using generic weather-normalizer
 statistics. Our verified local AHU child field is raw kelvin, so that detail
-cannot be transferred without checking the official SDK. Public-SDK compatibility
-is being checked separately; hidden evaluator parity remains a distinct question.
+cannot be transferred as written. The subsequent [public SDK probe](OFFICIAL_SDK_VERIFICATION.md)
+confirmed the raw-kelvin field and matching interface semantics. Hidden evaluator
+parity remains a distinct question.
 
 ## Why the controller can oscillate
 

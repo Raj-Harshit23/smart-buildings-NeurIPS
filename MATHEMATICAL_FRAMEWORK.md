@@ -9,6 +9,9 @@ implementation details against the linked sources when those sources change.
 `23a4560df0e2fe61054dd21066fa0c4b5da2c79c`, checked on 2026-10-19.
 Numerical examples describe shipped configurations, not universal constants for
 unseen buildings. Section 10 records the limits of hidden-evaluator verification.
+An independent public competition SDK probe on 2026-10-20 subsequently verified
+physical source hashes, interface semantics, observation timing/units and the
+gateway output contract; see [verification](OFFICIAL_SDK_VERIFICATION.md).
 
 ## 1. Decision problem and admissible models
 
@@ -125,6 +128,12 @@ algorithm may choose a discount factor, but that does not redefine the score.
 fixed constant `8640`. Even its `--baselines self` mode retains that denominator.
 Short-rollout results therefore require separately computed $R_s/H_s$ and must
 not be presented as full-episode leaderboard estimates.
+
+The public official gateway divides by its actual executed step count. Source
+inspection explains its observed 8641 actions: the environment checks termination
+against a zero-based counter before incrementing it. With configured length 8640
+it terminates on action 8641. Controlled local comparisons here use 8640 actions
+for both policies; official records retain the gateway's actual denominator.
 
 Sources: [local score](score_leaderboard.py),
 [reward](smart_buildings/smart_control/reward/setpoint_energy_carbon_regret.py),
@@ -335,18 +344,23 @@ and run status; water-system readings; building occupancy; comfort flags; outsid
 temperature; and cyclic time features. Runtime metadata does not supply a
 building/station label to use as a lookup key.
 
-The local evaluator explicitly sets occupancy normalizer $c_{occ}=125$:
+The environment uses its **public** occupancy normalizer $c_{occ}$:
 
 $$
 o_t^{occupancy}=\frac{N_t-c_{occ}}{c_{occ}+1},\qquad
 N_t=(c_{occ}+1)o_t^{occupancy}+c_{occ}.
 $$
 
-Thus $o_t^{occupancy}>0$ means $N_t>125$, not that the building has any
-occupants. With this normalizer, $N_t>0$ corresponds to
-$o_t^{occupancy}>-125/126$, up to numerical precision. Do not assume this
-constant for an independently configured hidden environment without checking
-its interface; none of the current controllers gates actions on this signal.
+Its constructor default is $c_{occ}=0$, with no override in the inspected
+shipped scenario configurations, so the actual signal there is the raw count
+$o_t^{occupancy}=N_t$. The evaluator's assignment to
+`env._occupancy_normalization_constant = 125` writes an unused private attribute;
+the observation code reads `env.occupancy_normalization_constant`. An earlier
+version of this document incorrectly treated that private assignment as active
+configuration. For a different actual normalizer, $N_t>0$ corresponds to
+$o_t^{occupancy}>-c_{occ}/(c_{occ}+1)$, up to numerical precision. Check the actual
+interface rather than inferring its setting from the unused attribute. None of
+the current controllers gates actions on this signal.
 
 Sources: [scenario pairing](smart_buildings/training_set.yaml),
 [metadata, normalizers and policy execution](smart_buildings/evaluate.py),
@@ -428,6 +442,12 @@ Sources: [action construction and normalizers](smart_buildings/evaluate.py),
 [AHU](smart_buildings/smart_control/simulator/air_handler.py),
 [VAV](smart_buildings/smart_control/simulator/vav.py),
 [pump](smart_buildings/smart_control/simulator/pump.py).
+
+The public gateway writes `submission.parquet` with columns `row_id: String`
+and `reward: Float32`, one row per evaluation scenario, where `reward` is the
+executed mean $R_s/H_s$. These entries are produced by executing the action
+policy. Gateway request timeouts are 900 seconds for construction/first turn and
+60 seconds for subsequent turns, distinct from overall platform compute limits.
 
 ## 7. Physical coupling and transition structure
 
@@ -693,12 +713,23 @@ require independent verification; do not silently promote assumptions to facts.
 | Item | Evidence / limit |
 | --- | --- |
 | Local horizon | `8640` actions at five-minute steps in standard evaluation |
-| Official V0 gateway run | Reported `8641` steps; terminal counting convention has not been verified |
+| Official V0 gateway run | Reported `8641` steps; source confirms termination is checked before counter increment |
 | Official V0 validation | Total reward `-215.2204509578005`; this training-scenario validation is not the hidden leaderboard score |
-| Final artifact | Gateway generated `submission.parquet`; its column schema has not been downloaded and verified |
+| Final artifact | Public gateway source defines `row_id: String`, `reward: Float32`; direct artifact download remains blocked |
 | V0 notebook configuration | Private, CPU, internet disabled, two-hour configured limit; these are our settings, not proof of competition-wide limits |
 | Claimed nine-hour limit / final notebook rules | Not independently verified from authoritative competition rules |
 | Hidden scenarios and SDK parity | Exact distribution, installed revision, and complete parity with this checkout remain unverified |
+
+A private offline Kaggle probe on 2026-10-20 independently confirmed the
+one-step zone-temperature delay in the attached public competition SDK: sensor
+294 K after step 1 while physical temperature was 289.4473 K; after step 2 the
+sensor reported 289.4473 K. AHU outside readings were raw 275.65 K, water was raw
+340 K, and pressure native ranges matched Section 6. Boiler, VAV, thermal
+simulator, finite-difference solver and reward source files matched local SHA256
+hashes exactly. Three environment/interface files differ in bytes but source
+comparison confirms AST equivalence, excluding our added policy imports/dispatch.
+This establishes selected public-SDK facts, not complete hidden
+evaluator parity. See [probe record](experiments/public_sdk_probe.json).
 
 The official gateway result and stored local baseline need not agree; do not
 attribute differences solely to terminal counting without verifying SDK and

@@ -17,6 +17,26 @@ and diagnostic-runner hashes. The prior 99-test suite passed, and the two added
 harness regression tests passed separately; the combined receipt distinguishes
 these test runs. Only fresh `non_mutating_v2` results can qualify a Kaggle export.
 
+Fresh source is frozen at `cb2256a` in
+`/workspace/smart-buildings-research/frozen-clean-adaptive-v4`. The eight-hour
+pipeline `/workspace/smart-buildings-research/prepare_clean_v4.py` waits for
+complete Fairbanks-1 and Phoenix candidate trajectories, then proves frozen
+source/export/recorded-action equivalence. Its artifact is
+`/workspace/smart-buildings-research/kaggle/clean-adaptive-v4`.
+`launch_clean_v4.py` waits for the fresh absolute V0 gate before publishing one
+new private offline notebook. `track_clean_v4.py` requires the output artifact,
+at least 8640 validation steps, and at most 10% regression from V0's matched
+official Atlanta validation loss before one scored entry. It checks allowance
+and persists attempt markers before mutations; ambiguous responses are not
+blindly retried. No candidate entry exists yet.
+
+The separate public-SDK probe completed. Core physical/reward files match
+exactly; environment ASTs match apart from controller registration. Runtime
+delay and units are independently confirmed. See
+[verification](OFFICIAL_SDK_VERIFICATION.md). Direct downloads remain
+proxy-blocked; the authorized private Kaggle probe supplied source hashes and
+the public interface source through its logs.
+
 The repository owner authorized continued research, implementation, testing,
 validation, promising Kaggle submissions, and iteration while they are away.
 Network use is limited to research, Kaggle, and previously authorized GitHub work.
