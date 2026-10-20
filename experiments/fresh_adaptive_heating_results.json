@@ -1,0 +1,311 @@
+{
+  "checked_at": "2026-10-20T10:53:30.195421+00:00",
+  "source_revision": "cb2256a02031592292f75f5de73e3a08f1cb5257",
+  "evaluation_protocol": "non_mutating_v2",
+  "scope": "Six matched 8640-action non_mutating_v2 local pairs; not a leaderboard score",
+  "pilot": {
+    "rows": [
+      {
+        "scenario": "building_train_1/fairbanks_1",
+        "baseline_loss": 0.21392441561495246,
+        "candidate_loss": 0.08664816647167299,
+        "relative_improvement": 0.5949589661255261,
+        "baseline_components": {
+          "comfort": 0.11691094189882278,
+          "energy": 0.2750653028488159,
+          "carbon": 0.4438239634037018
+        },
+        "candidate_components": {
+          "comfort": 0.05764603614807129,
+          "energy": 0.07703392952680588,
+          "carbon": 0.18326881527900696
+        },
+        "candidate_policy_ms": 4.632412183324656
+      },
+      {
+        "scenario": "building_train_5/singapore_4",
+        "baseline_loss": 0.10990291827728527,
+        "candidate_loss": 0.026034766775529444,
+        "relative_improvement": 0.7631112332263673,
+        "baseline_components": {
+          "comfort": 0.10540248453617096,
+          "energy": 0.1540355086326599,
+          "carbon": 0.07927162200212479
+        },
+        "candidate_components": {
+          "comfort": 0.029967544600367546,
+          "energy": 0.03266165032982826,
+          "carbon": 0.007609550841152668
+        },
+        "candidate_policy_ms": 4.346093213929533
+      },
+      {
+        "scenario": "building_train_8/phoenix_4",
+        "baseline_loss": 0.16020952459202617,
+        "candidate_loss": 0.03947548423962272,
+        "relative_improvement": 0.7536008902083249,
+        "baseline_components": {
+          "comfort": 0.15336768329143524,
+          "energy": 0.23693041503429413,
+          "carbon": 0.10401416569948196
+        },
+        "candidate_components": {
+          "comfort": 0.036765433847904205,
+          "energy": 0.07069863379001617,
+          "carbon": 0.01638248935341835
+        },
+        "candidate_policy_ms": 2.617666686296616
+      }
+    ],
+    "baseline_mean": 0.16134561949475465,
+    "candidate_mean": 0.05071947249560838,
+    "relative_improvement": 0.6856470435675059,
+    "worst_relative_improvement": 0.5949589661255261
+  },
+  "completed_four": {
+    "rows": [
+      {
+        "scenario": "building_train_1/fairbanks_1",
+        "baseline_loss": 0.21392441561495246,
+        "candidate_loss": 0.08664816647167299,
+        "relative_improvement": 0.5949589661255261,
+        "baseline_components": {
+          "comfort": 0.11691094189882278,
+          "energy": 0.2750653028488159,
+          "carbon": 0.4438239634037018
+        },
+        "candidate_components": {
+          "comfort": 0.05764603614807129,
+          "energy": 0.07703392952680588,
+          "carbon": 0.18326881527900696
+        },
+        "candidate_policy_ms": 4.632412183324656
+      },
+      {
+        "scenario": "building_train_5/singapore_4",
+        "baseline_loss": 0.10990291827728527,
+        "candidate_loss": 0.026034766775529444,
+        "relative_improvement": 0.7631112332263673,
+        "baseline_components": {
+          "comfort": 0.10540248453617096,
+          "energy": 0.1540355086326599,
+          "carbon": 0.07927162200212479
+        },
+        "candidate_components": {
+          "comfort": 0.029967544600367546,
+          "energy": 0.03266165032982826,
+          "carbon": 0.007609550841152668
+        },
+        "candidate_policy_ms": 4.346093213929533
+      },
+      {
+        "scenario": "building_train_8/phoenix_4",
+        "baseline_loss": 0.16020952459202617,
+        "candidate_loss": 0.03947548423962272,
+        "relative_improvement": 0.7536008902083249,
+        "baseline_components": {
+          "comfort": 0.15336768329143524,
+          "energy": 0.23693041503429413,
+          "carbon": 0.10401416569948196
+        },
+        "candidate_components": {
+          "comfort": 0.036765433847904205,
+          "energy": 0.07069863379001617,
+          "carbon": 0.01638248935341835
+        },
+        "candidate_policy_ms": 2.617666686296616
+      },
+      {
+        "scenario": "building_train_2/fairbanks_2",
+        "baseline_loss": 0.07929014348301848,
+        "candidate_loss": 0.06932531822287981,
+        "relative_improvement": 0.12567546005605135,
+        "baseline_components": {
+          "comfort": 0.09979904443025589,
+          "energy": 0.037203289568424225,
+          "carbon": 0.05985028296709061
+        },
+        "candidate_components": {
+          "comfort": 0.07910492271184921,
+          "energy": 0.03657674789428711,
+          "carbon": 0.07273505628108978
+        },
+        "candidate_policy_ms": 8.548460942445134
+      }
+    ],
+    "baseline_mean": 0.1408317504918206,
+    "candidate_mean": 0.055370933927426244,
+    "relative_improvement": 0.6068291863584969,
+    "worst_relative_improvement": 0.12567546005605135
+  },
+  "qualification": "qualified_for_kaggle_validation",
+  "validation": {
+    "rows": [
+      {
+        "scenario": "building_train_2/fairbanks_2",
+        "baseline_loss": 0.07929014348301848,
+        "candidate_loss": 0.06932531822287981,
+        "relative_improvement": 0.12567546005605135,
+        "baseline_components": {
+          "comfort": 0.09979904443025589,
+          "energy": 0.037203289568424225,
+          "carbon": 0.05985028296709061
+        },
+        "candidate_components": {
+          "comfort": 0.07910492271184921,
+          "energy": 0.03657674789428711,
+          "carbon": 0.07273505628108978
+        },
+        "candidate_policy_ms": 8.548460942445134
+      },
+      {
+        "scenario": "building_train_4/atlanta_5",
+        "baseline_loss": 0.02893980499653234,
+        "candidate_loss": 0.030576508959864385,
+        "relative_improvement": -0.05655545928965866,
+        "baseline_components": {
+          "comfort": 0.031031562015414238,
+          "energy": 0.04180705547332764,
+          "carbon": 0.009797288104891777
+        },
+        "candidate_components": {
+          "comfort": 0.0358559712767601,
+          "energy": 0.03674149513244629,
+          "carbon": 0.008573131635785103
+        },
+        "candidate_policy_ms": 3.630778841970486
+      },
+      {
+        "scenario": "building_train_7/denver_5",
+        "baseline_loss": 0.03687855423637082,
+        "candidate_loss": 0.02603331505666728,
+        "relative_improvement": 0.29407983594453424,
+        "baseline_components": {
+          "comfort": 0.04090788960456848,
+          "energy": 0.045390162616968155,
+          "carbon": 0.0162789486348629
+        },
+        "candidate_components": {
+          "comfort": 0.032813660800457,
+          "energy": 0.025338852778077126,
+          "carbon": 0.006386737339198589
+        },
+        "candidate_policy_ms": 2.960741291925236
+      }
+    ],
+    "baseline_mean": 0.04836950090530721,
+    "candidate_mean": 0.041978380746470485,
+    "relative_improvement": 0.13213119918993155,
+    "worst_relative_improvement": -0.05655545928965866
+  },
+  "combined": {
+    "rows": [
+      {
+        "scenario": "building_train_1/fairbanks_1",
+        "baseline_loss": 0.21392441561495246,
+        "candidate_loss": 0.08664816647167299,
+        "relative_improvement": 0.5949589661255261,
+        "baseline_components": {
+          "comfort": 0.11691094189882278,
+          "energy": 0.2750653028488159,
+          "carbon": 0.4438239634037018
+        },
+        "candidate_components": {
+          "comfort": 0.05764603614807129,
+          "energy": 0.07703392952680588,
+          "carbon": 0.18326881527900696
+        },
+        "candidate_policy_ms": 4.632412183324656
+      },
+      {
+        "scenario": "building_train_5/singapore_4",
+        "baseline_loss": 0.10990291827728527,
+        "candidate_loss": 0.026034766775529444,
+        "relative_improvement": 0.7631112332263673,
+        "baseline_components": {
+          "comfort": 0.10540248453617096,
+          "energy": 0.1540355086326599,
+          "carbon": 0.07927162200212479
+        },
+        "candidate_components": {
+          "comfort": 0.029967544600367546,
+          "energy": 0.03266165032982826,
+          "carbon": 0.007609550841152668
+        },
+        "candidate_policy_ms": 4.346093213929533
+      },
+      {
+        "scenario": "building_train_8/phoenix_4",
+        "baseline_loss": 0.16020952459202617,
+        "candidate_loss": 0.03947548423962272,
+        "relative_improvement": 0.7536008902083249,
+        "baseline_components": {
+          "comfort": 0.15336768329143524,
+          "energy": 0.23693041503429413,
+          "carbon": 0.10401416569948196
+        },
+        "candidate_components": {
+          "comfort": 0.036765433847904205,
+          "energy": 0.07069863379001617,
+          "carbon": 0.01638248935341835
+        },
+        "candidate_policy_ms": 2.617666686296616
+      },
+      {
+        "scenario": "building_train_2/fairbanks_2",
+        "baseline_loss": 0.07929014348301848,
+        "candidate_loss": 0.06932531822287981,
+        "relative_improvement": 0.12567546005605135,
+        "baseline_components": {
+          "comfort": 0.09979904443025589,
+          "energy": 0.037203289568424225,
+          "carbon": 0.05985028296709061
+        },
+        "candidate_components": {
+          "comfort": 0.07910492271184921,
+          "energy": 0.03657674789428711,
+          "carbon": 0.07273505628108978
+        },
+        "candidate_policy_ms": 8.548460942445134
+      },
+      {
+        "scenario": "building_train_4/atlanta_5",
+        "baseline_loss": 0.02893980499653234,
+        "candidate_loss": 0.030576508959864385,
+        "relative_improvement": -0.05655545928965866,
+        "baseline_components": {
+          "comfort": 0.031031562015414238,
+          "energy": 0.04180705547332764,
+          "carbon": 0.009797288104891777
+        },
+        "candidate_components": {
+          "comfort": 0.0358559712767601,
+          "energy": 0.03674149513244629,
+          "carbon": 0.008573131635785103
+        },
+        "candidate_policy_ms": 3.630778841970486
+      },
+      {
+        "scenario": "building_train_7/denver_5",
+        "baseline_loss": 0.03687855423637082,
+        "candidate_loss": 0.02603331505666728,
+        "relative_improvement": 0.29407983594453424,
+        "baseline_components": {
+          "comfort": 0.04090788960456848,
+          "energy": 0.045390162616968155,
+          "carbon": 0.0162789486348629
+        },
+        "candidate_components": {
+          "comfort": 0.032813660800457,
+          "energy": 0.025338852778077126,
+          "carbon": 0.006386737339198589
+        },
+        "candidate_policy_ms": 2.960741291925236
+      }
+    ],
+    "baseline_mean": 0.10485756020003091,
+    "candidate_mean": 0.046348926621039434,
+    "relative_improvement": 0.5579820231119037,
+    "worst_relative_improvement": -0.05655545928965866
+  }
+}

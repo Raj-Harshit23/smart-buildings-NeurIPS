@@ -1,0 +1,124 @@
+{
+  "observer_fairbanks_2": {
+    "scenario": "smart_buildings/training_scenarios/building_train_2/fairbanks_2",
+    "actions_replayed_exactly": 8640,
+    "scope": "Causal replay; future sensor values are offline current-temperature labels only",
+    "estimation": {
+      "whole_episode": {
+        "stale_sensor_mae_k": 0.38379931449890137,
+        "observer_mae_k": 0.34808555245399475,
+        "stale_sensor_p99_k": 7.3733673095703125,
+        "observer_p99_k": 7.341785430908203
+      },
+      "after_one_day": {
+        "stale_sensor_mae_k": 0.38182884454727173,
+        "observer_mae_k": 0.34748125076293945,
+        "stale_sensor_p99_k": 7.447957992553711,
+        "observer_p99_k": 7.41844367980957
+      }
+    },
+    "mean_observer_weight": 0.5666482273481616,
+    "forecast_ablations_on_fixed_policy_data": {
+      "unclipped_confidence_weighted": {
+        "whole_episode": {
+          "mae_k": 0.33595428483757195,
+          "p99_k": 7.202441406249996
+        },
+        "after_one_day": {
+          "mae_k": 0.3359376289435575,
+          "p99_k": 7.298370203492411
+        }
+      },
+      "unclipped_unweighted": {
+        "whole_episode": {
+          "mae_k": 3.123295898632212,
+          "p99_k": 23.674360584608383
+        },
+        "after_one_day": {
+          "mae_k": 3.227576861266854,
+          "p99_k": 23.759940498400233
+        }
+      },
+      "clipped_unweighted": {
+        "whole_episode": {
+          "mae_k": 0.6934638525084641,
+          "p99_k": 6.385018920898435
+        },
+        "after_one_day": {
+          "mae_k": 0.7095549491013026,
+          "p99_k": 6.469132080078147
+        }
+      }
+    },
+    "forecast_ablation_scope": "Causal forecast accuracy on the actual recorded V4 trajectory; no alternative control-performance claim"
+  },
+  "correction_bound": {
+    "scope": "Oracle lower bound for any estimator whose correction from the delayed sensor is at most 1.5 K; not a deployable forecast or control result",
+    "actual_step_over_1_5k_fraction": 0.06382002274228363,
+    "actual_observer_mae_k": 0.34808552265167236,
+    "minimum_possible_mae_under_global_cap_k": 0.1587584912776947,
+    "actual_observer_p99_k": 7.341785430908203,
+    "minimum_possible_p99_under_global_cap_k": 5.8733673095703125
+  },
+  "parameter_diagnosis": {
+    "scope": "Observed error association and final parameter bounds; not proof of a corrective model benefit",
+    "minimum_region_area_m2": 52.0,
+    "area_quantiles_m2": [
+      61.544000000000004,
+      88.92,
+      173.392
+    ],
+    "area_below_1m2_count": 0,
+    "air_capacitance_prior_exceeds_absolute_kappa_cap_count": 0,
+    "final_kappa_upper_bound_count": 0,
+    "final_a_upper_bound_count": 0,
+    "final_b_upper_bound_count": 0,
+    "final_abs_c_upper_bound_count": 7,
+    "spearman_log_area_vs_mae": -0.41013489415622456,
+    "fraction_error_from_worst_five_zones": 0.22855754078588708
+  },
+  "dispatch_phoenix": {
+    "scenario": "smart_buildings/training_scenarios/building_train_8/phoenix_4",
+    "policy": "adaptive_heating",
+    "labeled_decisions": 8639,
+    "scope": "Offline labels and loss associations only; not a causal performance estimate",
+    "hot_threshold_above_band_k": 0.5,
+    "actual_parent_clock_vs_comfort_flag_mismatch_fraction": 0.0,
+    "events": {
+      "any_off_hot_ahu": {
+        "fraction_of_steps": 0.14654473897441833,
+        "fraction_of_total_comfort_loss_on_these_steps": 0.32093894481658936,
+        "fraction_of_total_loss_on_these_steps": 0.23670344054698944
+      },
+      "pure_cooling_off_hot_ahu": {
+        "fraction_of_steps": 0.14422965621020953,
+        "fraction_of_total_comfort_loss_on_these_steps": 0.3125075101852417,
+        "fraction_of_total_loss_on_these_steps": 0.23082047700881958
+      }
+    },
+    "ahu_rows": [
+      {
+        "ahu": "ahu_1",
+        "zone_count": 10,
+        "off_fraction": 0.24574603542076628,
+        "off_while_zone_hot_fraction": 0.06609561291816182,
+        "off_pure_cooling_fraction": 0.06609561291816182
+      },
+      {
+        "ahu": "ahu_2",
+        "zone_count": 10,
+        "off_fraction": 0.16784350040513948,
+        "off_while_zone_hot_fraction": 0.049079754601226995,
+        "off_pure_cooling_fraction": 0.04861673804838523
+      },
+      {
+        "ahu": "ahu_3",
+        "zone_count": 10,
+        "off_fraction": 0.276652390322954,
+        "off_while_zone_hot_fraction": 0.05347841185322375,
+        "off_pure_cooling_fraction": 0.0516263456418567
+      }
+    ]
+  },
+  "scope": "Retrospective public-training diagnostics; associations and bounds are not alternative policy performance"
+}

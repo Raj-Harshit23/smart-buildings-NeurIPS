@@ -1,5 +1,10 @@
 # Delay-aware thermal observer: second controlled experiment
 
+Earlier rollout and conditional-fit numbers used the subsequently invalidated
+instrumented runner. Treat them as historical evidence, not normal-evaluation
+performance. The public SDK independently confirms sensor timing; current
+corrected results and limitations are in [EXPERIMENTS.md](EXPERIMENTS.md).
+
 References: [MATHEMATICAL_FRAMEWORK.md](MATHEMATICAL_FRAMEWORK.md), verified sensor
 timing and Sections 1, 6, 7; [ALGORITHM_RESEARCH.md](ALGORITHM_RESEARCH.md), Sections
 5 and 8. Registered controller: `lag_aware_allocator`.

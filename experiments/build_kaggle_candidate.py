@@ -121,7 +121,7 @@ def main():
         print(json.dumps(rows[-1]), flush=True)
     template = json.loads((args.base_artifact / "submission.ipynb").read_text())
     metadata = json.loads((args.base_artifact / "kernel-metadata.json").read_text())
-    metadata.update(id=args.kernel_ref, title="Smart Buildings " + args.policy.replace("_", " ").title(),
+    metadata.update(id=args.kernel_ref, title=args.kernel_ref.split("/")[-1].replace("-", " ").title(),
                     is_private=True, enable_internet=False, enable_gpu=False, enable_tpu=False)
     controller_hash = hashlib.sha256(core.encode()).hexdigest()
     note = (f"# {args.policy}\n\nCausal controller from revision `{revision}`.\n\n"

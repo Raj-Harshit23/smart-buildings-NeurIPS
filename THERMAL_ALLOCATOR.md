@@ -1,5 +1,10 @@
 # Thermal allocator: first controlled experiment
 
+Earlier performance measurements used a diagnostic runner with an extra
+state-mutating boiler read and are historical only. The physical derivations
+and unit tests retain their stated scope. Current qualification must use
+`non_mutating_v2`; see [experiment record](EXPERIMENTS.md).
+
 This implements the first increment in [ALGORITHM_RESEARCH.md](ALGORITHM_RESEARCH.md),
 using [MATHEMATICAL_FRAMEWORK.md](MATHEMATICAL_FRAMEWORK.md) Sections 1, 3, 6, and 7.
 The controller is registered as `thermal_allocator`.

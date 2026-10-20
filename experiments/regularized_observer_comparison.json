@@ -1,0 +1,420 @@
+{
+  "scope": "Prequential model comparison only; no control or leaderboard claim",
+  "scenarios": [
+    {
+      "scenario": "building_train_2/fairbanks_2",
+      "models": {
+        "original_rls": {
+          "unguarded_model": {
+            "whole_episode": {
+              "mae_k": 3.123295898632212,
+              "p99_k": 23.674360584608383
+            },
+            "after_one_day": {
+              "mae_k": 3.227576861266854,
+              "p99_k": 23.759940498400233
+            }
+          },
+          "confidence_weighted_unclipped": {
+            "whole_episode": {
+              "mae_k": 0.33595428483757195,
+              "p99_k": 7.202441406249996
+            },
+            "after_one_day": {
+              "mae_k": 0.3359376289435575,
+              "p99_k": 7.298370203492411
+            }
+          },
+          "confidence_weighted_clipped": {
+            "whole_episode": {
+              "mae_k": 0.3480855160523428,
+              "p99_k": 7.341780395507808
+            },
+            "after_one_day": {
+              "mae_k": 0.3474812022291715,
+              "p99_k": 7.418434448242198
+            }
+          }
+        },
+        "permanent_implicit": {
+          "unguarded_model": {
+            "whole_episode": {
+              "mae_k": 0.12883041332098874,
+              "p99_k": 0.6907952120426963
+            },
+            "after_one_day": {
+              "mae_k": 0.12978873668340474,
+              "p99_k": 0.6823607374247743
+            }
+          },
+          "confidence_weighted_unclipped": {
+            "whole_episode": {
+              "mae_k": 0.1722476035557591,
+              "p99_k": 1.9497587917652495
+            },
+            "after_one_day": {
+              "mae_k": 0.16656735832818553,
+              "p99_k": 1.7631235114649002
+            }
+          },
+          "confidence_weighted_clipped": {
+            "whole_episode": {
+              "mae_k": 0.28937119491088115,
+              "p99_k": 6.200830510401479
+            },
+            "after_one_day": {
+              "mae_k": 0.2867232416394963,
+              "p99_k": 6.2588617244543245
+            }
+          }
+        },
+        "permanent_extended": {
+          "unguarded_model": {
+            "whole_episode": {
+              "mae_k": 0.13130411211425677,
+              "p99_k": 0.63330972428361
+            },
+            "after_one_day": {
+              "mae_k": 0.1322064297888636,
+              "p99_k": 0.6255509188776036
+            }
+          },
+          "confidence_weighted_unclipped": {
+            "whole_episode": {
+              "mae_k": 0.1734276692320448,
+              "p99_k": 1.8920550319441047
+            },
+            "after_one_day": {
+              "mae_k": 0.16738738637571515,
+              "p99_k": 1.6851897801774895
+            }
+          },
+          "confidence_weighted_clipped": {
+            "whole_episode": {
+              "mae_k": 0.29133751678872527,
+              "p99_k": 6.193070418724504
+            },
+            "after_one_day": {
+              "mae_k": 0.28854926302508854,
+              "p99_k": 6.2492304643827445
+            }
+          }
+        }
+      },
+      "scope": "Actual V4 commands; causal forecasts; no alternative control-performance claim",
+      "baseline_causal_prediction_trace_exact": true,
+      "jacobian_maximum_finite_difference_error": 3.693681804861626e-09
+    },
+    {
+      "scenario": "building_train_1/fairbanks_1",
+      "models": {
+        "original_rls": {
+          "unguarded_model": {
+            "whole_episode": {
+              "mae_k": 5.241703269037016,
+              "p99_k": 31.980396582447543
+            },
+            "after_one_day": {
+              "mae_k": 5.420572615179764,
+              "p99_k": 32.09531845667082
+            }
+          },
+          "confidence_weighted_unclipped": {
+            "whole_episode": {
+              "mae_k": 0.17111316319513595,
+              "p99_k": 2.7274047851562475
+            },
+            "after_one_day": {
+              "mae_k": 0.17543214525949274,
+              "p99_k": 2.759711184479549
+            }
+          },
+          "confidence_weighted_clipped": {
+            "whole_episode": {
+              "mae_k": 0.17892348232405292,
+              "p99_k": 2.7602966308593633
+            },
+            "after_one_day": {
+              "mae_k": 0.1834114051437597,
+              "p99_k": 2.793499755859372
+            }
+          }
+        },
+        "permanent_implicit": {
+          "unguarded_model": {
+            "whole_episode": {
+              "mae_k": 0.08108364728805718,
+              "p99_k": 0.3620334107238476
+            },
+            "after_one_day": {
+              "mae_k": 0.0818174917725382,
+              "p99_k": 0.36093808888321516
+            }
+          },
+          "confidence_weighted_unclipped": {
+            "whole_episode": {
+              "mae_k": 0.08055644645323849,
+              "p99_k": 0.36421730252360424
+            },
+            "after_one_day": {
+              "mae_k": 0.0817192242301764,
+              "p99_k": 0.36111176007433865
+            }
+          },
+          "confidence_weighted_clipped": {
+            "whole_episode": {
+              "mae_k": 0.1152417473186694,
+              "p99_k": 1.4728680216417098
+            },
+            "after_one_day": {
+              "mae_k": 0.1174983696206595,
+              "p99_k": 1.4882116699218741
+            }
+          }
+        },
+        "permanent_extended": {
+          "unguarded_model": {
+            "whole_episode": {
+              "mae_k": 0.08357655267924119,
+              "p99_k": 0.3449490810617816
+            },
+            "after_one_day": {
+              "mae_k": 0.08419028964631692,
+              "p99_k": 0.34431839611507253
+            }
+          },
+          "confidence_weighted_unclipped": {
+            "whole_episode": {
+              "mae_k": 0.08278810901821385,
+              "p99_k": 0.3469900864438273
+            },
+            "after_one_day": {
+              "mae_k": 0.08414047017392257,
+              "p99_k": 0.3437981051301653
+            }
+          },
+          "confidence_weighted_clipped": {
+            "whole_episode": {
+              "mae_k": 0.11807821235091624,
+              "p99_k": 1.475433349609375
+            },
+            "after_one_day": {
+              "mae_k": 0.1205012420096548,
+              "p99_k": 1.4957287597656226
+            }
+          }
+        }
+      },
+      "scope": "Actual V4 commands; causal forecasts; no alternative control-performance claim",
+      "jacobian_maximum_finite_difference_error": 5.2927937588265195e-09
+    },
+    {
+      "scenario": "building_train_8/phoenix_4",
+      "models": {
+        "original_rls": {
+          "unguarded_model": {
+            "whole_episode": {
+              "mae_k": 0.0957194408925733,
+              "p99_k": 0.44962365981895
+            },
+            "after_one_day": {
+              "mae_k": 0.09561524075782309,
+              "p99_k": 0.44546875276821213
+            }
+          },
+          "confidence_weighted_unclipped": {
+            "whole_episode": {
+              "mae_k": 0.09777432206067901,
+              "p99_k": 0.5076707874570524
+            },
+            "after_one_day": {
+              "mae_k": 0.0947160033329825,
+              "p99_k": 0.45290006254629933
+            }
+          },
+          "confidence_weighted_clipped": {
+            "whole_episode": {
+              "mae_k": 0.179210410670091,
+              "p99_k": 2.2046865844726558
+            },
+            "after_one_day": {
+              "mae_k": 0.17885957645404424,
+              "p99_k": 2.224151611328125
+            }
+          }
+        },
+        "permanent_implicit": {
+          "unguarded_model": {
+            "whole_episode": {
+              "mae_k": 0.0946842398005738,
+              "p99_k": 0.4271825390929847
+            },
+            "after_one_day": {
+              "mae_k": 0.09447842504107083,
+              "p99_k": 0.42267597085005904
+            }
+          },
+          "confidence_weighted_unclipped": {
+            "whole_episode": {
+              "mae_k": 0.09631730976468632,
+              "p99_k": 0.47198190407526
+            },
+            "after_one_day": {
+              "mae_k": 0.09321386624088196,
+              "p99_k": 0.4194543108192782
+            }
+          },
+          "confidence_weighted_clipped": {
+            "whole_episode": {
+              "mae_k": 0.17792539691358109,
+              "p99_k": 2.2048529052734374
+            },
+            "after_one_day": {
+              "mae_k": 0.17753954444574702,
+              "p99_k": 2.2241427612304685
+            }
+          }
+        },
+        "permanent_extended": {
+          "unguarded_model": {
+            "whole_episode": {
+              "mae_k": 0.08754423199563396,
+              "p99_k": 0.33700506081697135
+            },
+            "after_one_day": {
+              "mae_k": 0.08717874367562851,
+              "p99_k": 0.3318183350457086
+            }
+          },
+          "confidence_weighted_unclipped": {
+            "whole_episode": {
+              "mae_k": 0.08895045149851699,
+              "p99_k": 0.34588049771819157
+            },
+            "after_one_day": {
+              "mae_k": 0.08575139603150861,
+              "p99_k": 0.3158497100312246
+            }
+          },
+          "confidence_weighted_clipped": {
+            "whole_episode": {
+              "mae_k": 0.17234194216877752,
+              "p99_k": 2.2037152099609365
+            },
+            "after_one_day": {
+              "mae_k": 0.1719167068140554,
+              "p99_k": 2.220624389648437
+            }
+          }
+        }
+      },
+      "scope": "Actual V4 commands; causal forecasts; no alternative control-performance claim",
+      "jacobian_maximum_finite_difference_error": 4.833248773428167e-09
+    },
+    {
+      "scenario": "building_train_5/singapore_4",
+      "models": {
+        "original_rls": {
+          "unguarded_model": {
+            "whole_episode": {
+              "mae_k": 0.09909376490096929,
+              "p99_k": 0.4967966141678046
+            },
+            "after_one_day": {
+              "mae_k": 0.10163961901970686,
+              "p99_k": 0.5014553547131936
+            }
+          },
+          "confidence_weighted_unclipped": {
+            "whole_episode": {
+              "mae_k": 0.10055072389750731,
+              "p99_k": 0.5464312527744479
+            },
+            "after_one_day": {
+              "mae_k": 0.10356741598591601,
+              "p99_k": 0.551795002657968
+            }
+          },
+          "confidence_weighted_clipped": {
+            "whole_episode": {
+              "mae_k": 0.10453083150849456,
+              "p99_k": 0.604500378472697
+            },
+            "after_one_day": {
+              "mae_k": 0.10768478512150675,
+              "p99_k": 0.6121779128270891
+            }
+          }
+        },
+        "permanent_implicit": {
+          "unguarded_model": {
+            "whole_episode": {
+              "mae_k": 0.09796865072834562,
+              "p99_k": 0.4300750067675714
+            },
+            "after_one_day": {
+              "mae_k": 0.10025332275217383,
+              "p99_k": 0.43342095242630413
+            }
+          },
+          "confidence_weighted_unclipped": {
+            "whole_episode": {
+              "mae_k": 0.09847063889771744,
+              "p99_k": 0.4578634045447295
+            },
+            "after_one_day": {
+              "mae_k": 0.1013078189489021,
+              "p99_k": 0.46136211247381825
+            }
+          },
+          "confidence_weighted_clipped": {
+            "whole_episode": {
+              "mae_k": 0.10260002483356455,
+              "p99_k": 0.5101213385964563
+            },
+            "after_one_day": {
+              "mae_k": 0.10557961455419289,
+              "p99_k": 0.5157424871713139
+            }
+          }
+        },
+        "permanent_extended": {
+          "unguarded_model": {
+            "whole_episode": {
+              "mae_k": 0.07947419100060676,
+              "p99_k": 0.3304847542789502
+            },
+            "after_one_day": {
+              "mae_k": 0.08102044348441942,
+              "p99_k": 0.33268923475754236
+            }
+          },
+          "confidence_weighted_unclipped": {
+            "whole_episode": {
+              "mae_k": 0.07885069928770616,
+              "p99_k": 0.33133369136020263
+            },
+            "after_one_day": {
+              "mae_k": 0.0810106335763694,
+              "p99_k": 0.33355564692407347
+            }
+          },
+          "confidence_weighted_clipped": {
+            "whole_episode": {
+              "mae_k": 0.08327505541994353,
+              "p99_k": 0.3753271293163826
+            },
+            "after_one_day": {
+              "mae_k": 0.08558757198211703,
+              "p99_k": 0.3799557220413786
+            }
+          }
+        }
+      },
+      "scope": "Actual V4 commands; causal forecasts; no alternative control-performance claim",
+      "jacobian_maximum_finite_difference_error": 3.772546275371269e-09
+    }
+  ],
+  "underlying_policy_source_revision": "cb2256a02031592292f75f5de73e3a08f1cb5257",
+  "study_implementation_sha256": "4df72c7e918075a07cad8fda8163a20d545993bef3d11943c756ab82ac52d023"
+}

@@ -128,6 +128,13 @@ alongside `pid_water` and does not replace the reference baselines.
 The next experiment, `lag_aware_allocator`, adds a causal thermal observer;
 see [its delay and identification notes](DELAY_AWARE_ALLOCATOR.md).
 
+The current validated local candidate is `adaptive_heating`; see
+[its inverse-model design](ADAPTIVE_HEATING.md) and the
+[current experiment record](EXPERIMENTS.md). Earlier diagnostic runs were
+invalidated after a state-mutating sensor read was found; only
+`non_mutating_v2` results qualify a submission. Public SDK compatibility and
+the official action/output contract are [verified here](OFFICIAL_SDK_VERIFICATION.md).
+
 **Edit `smart_buildings/baselines/transfer_policy.py`.** It carries the full
 interface contract in its module docstring — action layout, observation layout,
 what each setpoint physically does, and the traps. Read that first;

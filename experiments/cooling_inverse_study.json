@@ -1,0 +1,80 @@
+{
+  "rows": [
+    {
+      "scenario": "building_train_8/phoenix_4",
+      "policy": "adaptive_heating",
+      "steps": 8640,
+      "total_reward": -341.06818383034033,
+      "mean_loss": 0.03947548423962272,
+      "mean_components": {
+        "comfort": 0.03676543267944773,
+        "energy": 0.0706986331884749,
+        "carbon": 0.016382489911796083
+      },
+      "policy_ms_mean": 2.2569606809029037,
+      "policy_ms_p99": 3.40091447995178,
+      "elapsed_seconds": 453.803557746,
+      "evaluation_protocol": "non_mutating_v2",
+      "scope": "Matched public-training research only; no scored entry"
+    },
+    {
+      "scenario": "building_train_8/phoenix_4",
+      "policy": "adaptive_cooling",
+      "steps": 8640,
+      "total_reward": -337.6736942424142,
+      "mean_loss": 0.039082603500279416,
+      "mean_components": {
+        "comfort": 0.03709839211563426,
+        "energy": 0.06830355958212422,
+        "carbon": 0.0158142816359246
+      },
+      "policy_ms_mean": 3.096539645948898,
+      "policy_ms_p99": 5.007689339968245,
+      "elapsed_seconds": 461.7159032819999,
+      "evaluation_protocol": "non_mutating_v2",
+      "scope": "Matched public-training research only; no scored entry"
+    },
+    {
+      "scenario": "building_train_5/singapore_4",
+      "policy": "adaptive_heating",
+      "steps": 8640,
+      "total_reward": -224.9403849405744,
+      "mean_loss": 0.026034766775529444,
+      "mean_components": {
+        "comfort": 0.029967543691681284,
+        "energy": 0.032661651589166577,
+        "carbon": 0.007609551068884878
+      },
+      "policy_ms_mean": 4.387758242592789,
+      "policy_ms_p99": 6.616807800135134,
+      "elapsed_seconds": 1030.542683208,
+      "evaluation_protocol": "non_mutating_v2",
+      "scope": "Matched public-training research only; no scored entry"
+    },
+    {
+      "scenario": "building_train_5/singapore_4",
+      "policy": "adaptive_cooling",
+      "steps": 8640,
+      "total_reward": -216.64211031576906,
+      "mean_loss": 0.025074318323584383,
+      "mean_components": {
+        "comfort": 0.028289919291192664,
+        "energy": 0.03285276166821892,
+        "carbon": 0.007649072095835381
+      },
+      "policy_ms_mean": 5.666447762848406,
+      "policy_ms_p99": 8.095102219958802,
+      "elapsed_seconds": 1017.344412878,
+      "evaluation_protocol": "non_mutating_v2",
+      "scope": "Matched public-training research only; no scored entry"
+    }
+  ],
+  "python_version": "3.13.15",
+  "numpy_version": "2.1.3",
+  "scope": "Same image, complete matched public training runs; not a leaderboard score",
+  "kernel_ref": "harshitraj2123221/smart-buildings-v5-cooling-inverse-study",
+  "kernel_version": 1,
+  "frozen_revision": "0db1fe83dbd8c789a2a49e1ead924374494a1455",
+  "controller_sha256": "0550765ef2ab63c01d00cfc59a31f1cec2335e89d08fa4c7003255562e35508f",
+  "decision": "Hold: 2.1% two-case mean improvement; no scored entry"
+}

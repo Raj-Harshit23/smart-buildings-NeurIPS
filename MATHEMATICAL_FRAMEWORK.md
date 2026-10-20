@@ -141,9 +141,15 @@ Sources: [local score](score_leaderboard.py),
 
 ## 3. Comfort term
 
-For zone $i$, let $T_{i,t}$ be its sensed air temperature in kelvin,
+For scored physical zone $i$, let $T_{i,t}$ be its grid-averaged air temperature
+written into `RewardInfo`, in kelvin,
 $[L_{i,t},U_{i,t}]$ its current setpoint band, and $n_{i,t}\geq0$ its average
-occupancy during the reward interval. Define
+occupancy during the reward interval.
+
+Reward zones are physical rooms; action/sensor indices refer to VAV boxes.
+The simulator supports many-to-many servicing, so do not silently identify the
+number of scored rooms with the number $V$ of VAV actuators. The current compact
+observers use one state per VAV temperature sensor as an approximation. Define
 
 $$
 d_{i,t}=\max\{0,L_{i,t}-T_{i,t},T_{i,t}-U_{i,t}\},
@@ -344,23 +350,40 @@ and run status; water-system readings; building occupancy; comfort flags; outsid
 temperature; and cyclic time features. Runtime metadata does not supply a
 building/station label to use as a lookup key.
 
-The environment uses its **public** occupancy normalizer $c_{occ}$:
+The environment uses its **public** occupancy normalizer $c_{occ}$. Define
+average occupancy $A_i(a,b)=(b-a)^{-1}\int_a^b N_i(s)\,ds$. At simulator time
+$\tau$, the local building wrapper and reward use different windows:
 
 $$
-o_t^{occupancy}=\frac{N_t-c_{occ}}{c_{occ}+1},\qquad
-N_t=(c_{occ}+1)o_t^{occupancy}+c_{occ}.
+\begin{aligned}
+\widetilde N^{obs}(\tau)
+ &=\left\lfloor\sum_i A_i(\tau-300\mathrm s,\tau)\right\rfloor,\\
+o^{occupancy}(\tau)
+ &=\frac{\widetilde N^{obs}(\tau)-c_{occ}}{c_{occ}+1},\\
+n_i^{reward}(\tau)&=A_i(\tau,\tau+\Delta t).
+\end{aligned}
 $$
 
-Its constructor default is $c_{occ}=0$, with no override in the inspected
-shipped scenario configurations, so the actual signal there is the raw count
-$o_t^{occupancy}=N_t$. The evaluator's assignment to
-`env._occupancy_normalization_constant = 125` writes an unused private attribute;
-the observation code reads `env.occupancy_normalization_constant`. An earlier
-version of this document incorrectly treated that private assignment as active
-configuration. For a different actual normalizer, $N_t>0$ corresponds to
-$o_t^{occupancy}>-c_{occ}/(c_{occ}+1)$, up to numerical precision. Check the actual
-interface rather than inferring its setting from the unused attribute. None of
-the current controllers gates actions on this signal.
+Its actual constructor default is $c_{occ}=0$, with no override in the inspected
+shipped configurations, so the signal is the raw **integer** past-window count.
+The evaluator's `env._occupancy_normalization_constant = 125` writes an unused
+attribute; observation code reads `env.occupancy_normalization_constant`. An
+earlier version of this document incorrectly treated the private assignment as
+active configuration. None of the current controllers gates on this signal.
+
+Even with $c_{occ}=0$, an observed zero does not prove zero reward occupancy:
+the wrapper truncates fractional averages and its window precedes the reward
+window. A reward request at $\tau$ uses current grid temperature and schedule
+bands, with occupancy averaged over $[\tau,\tau+\Delta t]$. VAV temperature and
+setpoint registers are refreshed before the physical advance and can lag these
+current values by one step. Thus live setpoint registers agree with current
+reward bands away from schedule transitions, rather than at every instant.
+Do not shift the entire observation vector uniformly or equate the observed
+aggregate count with the reward's per-zone occupancy weights.
+
+Sources: [integer past-window occupancy](smart_buildings/smart_control/simulator/simulator_building.py),
+[current grid/schedule and forward reward occupancy](smart_buildings/smart_control/simulator/simulator_flexible_floor_plan.py),
+[VAV register refresh](smart_buildings/smart_control/simulator/vav.py).
 
 Sources: [scenario pairing](smart_buildings/training_set.yaml),
 [metadata, normalizers and policy execution](smart_buildings/evaluate.py),
