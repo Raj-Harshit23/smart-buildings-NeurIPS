@@ -335,6 +335,19 @@ and run status; water-system readings; building occupancy; comfort flags; outsid
 temperature; and cyclic time features. Runtime metadata does not supply a
 building/station label to use as a lookup key.
 
+The local evaluator explicitly sets occupancy normalizer $c_{occ}=125$:
+
+$$
+o_t^{occupancy}=\frac{N_t-c_{occ}}{c_{occ}+1},\qquad
+N_t=(c_{occ}+1)o_t^{occupancy}+c_{occ}.
+$$
+
+Thus $o_t^{occupancy}>0$ means $N_t>125$, not that the building has any
+occupants. With this normalizer, $N_t>0$ corresponds to
+$o_t^{occupancy}>-125/126$, up to numerical precision. Do not assume this
+constant for an independently configured hidden environment without checking
+its interface; none of the current controllers gates actions on this signal.
+
 Sources: [scenario pairing](smart_buildings/training_set.yaml),
 [metadata, normalizers and policy execution](smart_buildings/evaluate.py),
 [policy interface](smart_buildings/baselines/transfer_policy.py).
@@ -660,6 +673,17 @@ Begin from the basic submitted policy, obtain the scored result, inspect its
 failures, and use those failures to select the next change. Preserve the
 competition reward and score during policy comparisons. A surrogate training
 loss must be explicitly identified as a surrogate.
+
+### Noninterference of evaluation diagnostics
+
+The boiler's temperature getter mutates its tank temperature on each read at
+nonzero elapsed time. A repeated same-timestamp probe returned 332.5 K and then
+335.0 K. Diagnostic code must reuse the returned observation, and capture the
+reward response produced inside `env.step`, rather than adding sensor/reward
+queries. Protocol `non_mutating_v2` was verified against an ordinary rollout for
+exact observations, actions and rewards. Earlier instrumented results are
+historical hypothesis evidence only and cannot qualify a candidate submission.
+This corrects the measurement procedure, not the competition simulator itself.
 
 ## 10. Verified facts and unresolved external details
 

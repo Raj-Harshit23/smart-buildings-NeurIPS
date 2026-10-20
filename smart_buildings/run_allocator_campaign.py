@@ -45,6 +45,8 @@ def compare(root, scenarios, policies=POLICIES, reference_root=None):
         if any(row is None for row in pair):
             return None
         base, candidate = pair
+        if any(row.get("evaluation_protocol") != "non_mutating_v2" for row in pair):
+            raise ValueError(f"Legacy instrumented evaluation cannot qualify: {scenario}")
         if base["steps"] != 8640 or candidate["steps"] != 8640:
             raise ValueError(f"Incomplete episode: {scenario}")
         rows.append({"scenario": scenario, "baseline_loss": base["mean_loss"],

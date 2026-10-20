@@ -1,5 +1,11 @@
 # Adaptive inverse heat demand
 
+**Evidence correction:** the earlier local runner was subsequently found to
+advance boiler state through an extra sensor read. Historical component and
+prefix figures below motivate a hypothesis but do not establish normal control
+performance. Qualification must be rerun using `non_mutating_v2`; no historical
+comparison qualifies a submission. See [experiment correction](EXPERIMENTS.md).
+
 References: [MATHEMATICAL_FRAMEWORK.md](MATHEMATICAL_FRAMEWORK.md), Sections 1,
 6–9; [ALGORITHM_RESEARCH.md](ALGORITHM_RESEARCH.md), Sections 5 and 6.3;
 [DELAY_AWARE_ALLOCATOR.md](DELAY_AWARE_ALLOCATOR.md).

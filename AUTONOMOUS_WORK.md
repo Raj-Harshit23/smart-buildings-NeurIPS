@@ -1,5 +1,22 @@
 # Authorized autonomous experiment scope
 
+**Current evaluation requirement:** the original diagnostic runner was found to
+advance boiler temperature through an extra getter read. All four historical
+campaigns are invalidated for normal-evaluation/submission purposes. Keep their
+records, but rerun qualification using protocol `non_mutating_v2`. A direct
+24-step comparison passed exact observations, actions and rewards against an
+ordinary rollout. The official V0 score remains 0.06404. New campaign comparisons
+and exports reject legacy summaries. No candidate has been submitted.
+
+The fresh campaign is `results/clean-adaptive-v4/`, dispatched by
+`experiments/run_clean_validation.py`. It runs both Fairbanks baseline/candidate
+pairs first alongside the other pilot pairs, at most four concurrent full
+episodes, then delegates the remaining transfer pairs to the existing gate.
+Its total local budget is four hours. Each receipt identifies the controller
+and diagnostic-runner hashes. The prior 99-test suite passed, and the two added
+harness regression tests passed separately; the combined receipt distinguishes
+these test runs. Only fresh `non_mutating_v2` results can qualify a Kaggle export.
+
 The repository owner authorized continued research, implementation, testing,
 validation, promising Kaggle submissions, and iteration while they are away.
 Network use is limited to research, Kaggle, and previously authorized GitHub work.

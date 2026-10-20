@@ -48,5 +48,11 @@
       "mean_pump_power_w": 2260.171183738647,
       "mean_potential_saving_w": 182.85720827154947
     }
+  },
+  "evaluation_correction": {
+    "eligible_for_submission": false,
+    "protocol": "legacy_extra_boiler_read",
+    "scope": "Historical instrumented-system evidence only; normal evaluation must be rerun",
+    "evidence": "experiments/diagnostic_side_effect.json"
   }
 }

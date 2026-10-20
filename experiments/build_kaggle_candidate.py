@@ -60,6 +60,10 @@ def main():
     revision = subprocess.check_output(["git", "-C", str(source), "rev-parse", "HEAD"], text=True).strip()
     hashes = {str(path.relative_to(source)): digest(path) for path in paths}
     tests = json.loads(args.tests.read_text())
+    runner = "smart_buildings/diagnose_policy.py"
+    runner_hash = digest(source / runner)
+    if tests.get("evaluation_protocol") != "non_mutating_v2" or tests["sources"].get(runner) != runner_hash:
+        raise ValueError("Verified non-mutating diagnostic test receipt is required")
     if tests["passed"] < 87 or any(tests["sources"].get(k) != v for k, v in hashes.items()):
         raise ValueError("Test receipt must identify every exported controller source")
     parts = []
@@ -87,6 +91,10 @@ def main():
     for scenario in args.scenario:
         root = args.results_root / scenario / args.policy
         summary = json.loads((root / "summary.json").read_text())
+        if summary.get("evaluation_protocol") != "non_mutating_v2":
+            raise ValueError("Legacy instrumented evaluation cannot qualify an export")
+        if summary["source_sha256"].get(runner) != runner_hash:
+            raise ValueError("Rollout used a different evaluation runner")
         if summary["steps"] != 8640 or any(summary["source_sha256"].get(k) != v for k, v in hashes.items()):
             raise ValueError(f"Rollout does not match complete frozen source: {scenario}")
         path = source / "smart_buildings/training_scenarios" / scenario
@@ -132,6 +140,7 @@ def main():
                 "policy_sha256": hashes["smart_buildings/baselines/" + leaf],
                 "controller_sha256": controller_hash, "private": True, "internet": False,
                 "policy": args.policy,
+                "evaluation_protocol": "non_mutating_v2", "evaluation_runner_sha256": runner_hash,
                 "authorization": "Owner authorized grounded experiments and promising Kaggle submissions"}
     report = {"scenarios": rows, "tests_passed": tests["passed"], "sources": hashes,
               "scope": "Exact exported/source/recorded-action equivalence on complete local trajectories"}

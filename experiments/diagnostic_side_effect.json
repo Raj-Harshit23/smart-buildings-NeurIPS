@@ -1,0 +1,7 @@
+{
+  "test": "Repeated boiler temperature read at identical timestamp",
+  "first_read_k": 332.5,
+  "second_read_k": 335.0,
+  "delta_k": 2.5,
+  "finding": "Diagnostic sensor getter mutates physical tank temperature; legacy diagnostic comparisons do not exactly reproduce uninstrumented evaluation"
+}

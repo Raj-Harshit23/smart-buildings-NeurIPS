@@ -56,6 +56,8 @@ def main():
     if (args.output / "summary.json").exists():
         raise ValueError("Existing evaluation must not be overwritten")
     summary = json.loads((args.reference / "summary.json").read_text())
+    if summary.get("evaluation_protocol") != "non_mutating_v2":
+        raise ValueError("Legacy instrumented trajectory cannot qualify for reuse")
     if summary["steps"] != 8640:
         raise ValueError("Reference must be a complete rollout")
     provenance = verify_dynamics(args.reference_revision, summary)
@@ -65,6 +67,7 @@ def main():
     policy = POLICY_MAP[args.policy](metadata, env.action_spec())
     paths = sorted(p for p in Path("smart_buildings/baselines").glob("*.py")
                    if not p.name.endswith("_test.py") and not p.name.startswith("test_"))
+    paths.append(Path("smart_buildings/diagnose_policy.py"))
     hashes = {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
     with np.load(args.reference / "trajectory.npz") as archive:
         arrays = {k: archive[k] for k in archive.files}

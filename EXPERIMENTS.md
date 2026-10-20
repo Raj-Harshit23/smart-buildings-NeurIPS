@@ -1,5 +1,22 @@
 # Experiment record
 
+**Evaluation correction, 2026-10-20:** the original diagnostic runner made an
+extra read of the boiler temperature getter, which advances tank state. All
+allocator/observer results below from `results/allocator-v1`, `lag-aware-v2`,
+`lag-aware-pid-v3` and `adaptive-heating-v4` describe this instrumented system;
+they do **not** qualify as normal local evaluation or justify a submission.
+Their campaign decisions are invalidated. No candidate was submitted from them.
+The official Kaggle baseline score is unaffected. Fresh comparisons use protocol
+`non_mutating_v2`, which passed exact observation/action/reward equivalence with
+an ordinary 24-step rollout. Both the exporter and campaign reject legacy runs.
+See [side-effect proof](experiments/diagnostic_side_effect.json).
+
+The historical occupancy breakdown also treated a positive normalized occupancy
+signal as occupied. With this runner's normalizer, that threshold means more
+than 125 occupants; it is not the zero-occupancy threshold. Historical power
+figures described as occupied-time below are therefore high-occupancy diagnostics,
+not an exact occupied/unoccupied partition. Policy code does not use that split.
+
 ## First scored baseline
 
 - Kaggle notebook: `harshitraj2123221/smart-buildings-basic-v0-pid-water`, version 1.

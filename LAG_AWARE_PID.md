@@ -1,5 +1,10 @@
 # Observer and heating-allocation ablation
 
+**Evidence correction:** the original diagnostic runner added a state-mutating
+boiler read. Historical figures below describe an instrumented system and cannot
+qualify a normal-evaluation submission. Fresh validation requires protocol
+`non_mutating_v2`; see [experiment correction](EXPERIMENTS.md).
+
 Basis: [MATHEMATICAL_FRAMEWORK.md](MATHEMATICAL_FRAMEWORK.md), Sections 1,
 3, 6–9; [DELAY_AWARE_ALLOCATOR.md](DELAY_AWARE_ALLOCATOR.md).
 

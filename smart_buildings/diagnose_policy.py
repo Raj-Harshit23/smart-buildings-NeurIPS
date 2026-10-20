@@ -21,12 +21,30 @@ from smart_buildings.evaluate import (
 )
 
 
+EVALUATION_PROTOCOL = "non_mutating_v2"
+
+
+def install_reward_capture(env):
+    """Capture the reward response produced inside step, without recomputing it."""
+    captured = {}
+    original = env.get_reward_info_and_response
+    def capture():
+        result = original()
+        captured["result"] = result
+        return result
+    env.get_reward_info_and_response = capture
+    return captured
+
+
 def run(scenario: Path, policy_key: str, steps: int, output: Path, sensor_bands: bool = False) -> dict:
     output.mkdir(parents=True, exist_ok=True)
     env = load_hybrid_environment(scenario / "config.gin")
     env.metrics_path = None
     env._occupancy_normalization_constant = 125.0
     metadata = create_building_meta_data(env, scenario)
+    captured_reward = install_reward_capture(env)
+    water_sensor = next(i for i, name in enumerate(metadata["observation_field_names"])
+                        if name.endswith("supply_water_temperature_sensor"))
     policy = POLICY_MAP[policy_key](metadata, env.action_spec())
     if sensor_bands:
         if not hasattr(policy, "USE_SENSOR_BAND"):
@@ -35,6 +53,7 @@ def run(scenario: Path, policy_key: str, steps: int, output: Path, sensor_bands:
     run_name = policy_key + ("_sensor_bands" if sensor_bands else "")
     source_files = sorted(p for p in Path("smart_buildings/baselines").glob("*.py")
                           if not p.name.endswith("_test.py") and not p.name.startswith("test_"))
+    source_files.append(Path("smart_buildings/diagnose_policy.py"))
     source_hashes = {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in source_files}
     source_dir = output / "source"
     source_dir.mkdir(exist_ok=True)
@@ -65,8 +84,11 @@ def run(scenario: Path, policy_key: str, steps: int, output: Path, sensor_bands:
                 raise ValueError(f"Wrong action dtype/shape at step {step}: {key}")
             if not np.isfinite(value).all() or not ((value >= spec.low) & (value <= spec.high)).all():
                 raise ValueError(f"Nonfinite/out-of-bounds action at step {step}: {key}")
+        captured_reward.clear()
         obs, reward, terminated, truncated, _ = env.step(action)
-        _, response = env.get_reward_info_and_response()
+        if "result" not in captured_reward:
+            raise RuntimeError("Environment step did not expose its reward response")
+        _, response = captured_reward["result"]
         average = simulator.building.get_zone_average_temps()
         supply = {}
         for ahu in ahus:
@@ -76,7 +98,11 @@ def run(scenario: Path, policy_key: str, steps: int, output: Path, sensor_bands:
             supply[ahu.device_id()] = ahu.get_supply_air_temp(
                 return_temp, ahu.outside_air_temperature_sensor
             )
-        water_temp = water.supply_water_temperature_sensor
+        # Boiler sensor getters advance the tank on every read at a nonzero
+        # elapsed timestamp. Reuse the returned observation: an extra diagnostic
+        # getter would change the next transition and invalidate the evaluation.
+        # This exact AHU-child water field is raw kelvin in the local interface.
+        water_temp = float(obs[water_sensor])
         inlet = [supply[v.air_handler.device_id()] for v in vavs]
         temps = [v.zone_air_temperature for v in vavs]
         reheat = [v.compute_reheat_energy_rate(t, water_temp) for v, t in zip(vavs, inlet)]
@@ -127,6 +153,7 @@ def run(scenario: Path, policy_key: str, steps: int, output: Path, sensor_bands:
     if not np.isclose(weighted, mean_loss, atol=2e-6):
         raise ValueError(f"Component/reward mismatch: {weighted}, {mean_loss}")
     summary = {
+        "evaluation_protocol": EVALUATION_PROTOCOL,
         "policy": run_name, "scenario": str(scenario), "steps": count,
         "sensor_band_ablation": sensor_bands,
         "total_reward": float(np.sum(logs["rewards"])), "mean_loss": mean_loss,
@@ -139,7 +166,7 @@ def run(scenario: Path, policy_key: str, steps: int, output: Path, sensor_bands:
         "observation_fields": metadata["observation_field_names"],
         "zone_ids": [v.device_id() for v in vavs],
         "interpretation": "Local full episode" if count == 8640 else "Short diagnostic; not a leaderboard estimate",
-        "physical_probe_timing": "Device heat/flow probes recomputed after the step; reward components are the scored interval values",
+        "physical_probe_timing": "Read-only device heat/flow probes after step; water temperature reused from returned observation; reward response captured inside step",
     }
     np.savez_compressed(output / "trajectory.npz", **arrays)
     (output / "summary.json").write_text(json.dumps(summary, indent=2))

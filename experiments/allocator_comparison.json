@@ -229,5 +229,11 @@
   },
   "interpretation": "Local six-case full-horizon evaluation; not a hidden leaderboard estimate",
   "absolute_v0_gate_passed": false,
-  "decision": "Hold scored V2 submission: building 2 Fairbanks exceeds absolute V0 regression threshold"
+  "decision": "Hold scored V2 submission: building 2 Fairbanks exceeds absolute V0 regression threshold",
+  "evaluation_correction": {
+    "eligible_for_submission": false,
+    "protocol": "legacy_extra_boiler_read",
+    "scope": "Historical instrumented-system evidence only; normal evaluation must be rerun",
+    "evidence": "experiments/diagnostic_side_effect.json"
+  }
 }
