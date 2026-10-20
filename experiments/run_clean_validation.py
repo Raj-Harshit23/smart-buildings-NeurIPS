@@ -18,13 +18,18 @@ import fcntl
 
 
 def read(path):
-    return json.loads(path.read_text()) if path.exists() else None
+    try:
+        return json.loads(path.read_text()) if path.exists() else None
+    except json.JSONDecodeError:
+        return None
 
 
 def main():
     parser = argparse.ArgumentParser(__doc__)
     parser.add_argument("--root", type=Path, required=True)
-    parser.add_argument("--candidate", choices=["adaptive_heating", "lag_aware_allocator", "lag_aware_pid"], required=True)
+    parser.add_argument("--candidate", choices=["adaptive_heating", "lag_aware_allocator", "lag_aware_pid", "regularized_heating"], required=True)
+    parser.add_argument("--baseline", choices=["pid_water", "adaptive_heating"], default="pid_water")
+    parser.add_argument("--reference-root", type=Path)
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--hours", type=float, default=4)
     args = parser.parse_args()
@@ -35,6 +40,9 @@ def main():
     fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
     state_path = args.root / "queue.json"
     previous = read(state_path) or {}
+    if previous and (previous.get("baseline", args.baseline) != args.baseline
+                     or previous.get("reference_root") != (str(args.reference_root) if args.reference_root else None)):
+        raise ValueError("Reference changed: start a new campaign directory")
     paths = sorted(p for p in Path("smart_buildings/baselines").glob("*.py")
                    if not p.name.endswith("_test.py") and not p.name.startswith("test_"))
     paths.append(Path("smart_buildings/diagnose_policy.py"))
@@ -42,6 +50,7 @@ def main():
     if previous.get("sources") and previous["sources"] != hashes:
         raise ValueError("Source changed: start a new campaign directory")
     state = {"stage": "fresh_full_rollouts", "sources": hashes, "candidate": args.candidate,
+             "baseline": args.baseline, "reference_root": str(args.reference_root) if args.reference_root else None,
              "evaluation_protocol": "non_mutating_v2", "supervisor_pid": os.getpid(), "running": {},
              "authorization": "Owner authorized grounded autonomous validation and promising submissions"}
     def save():
@@ -66,7 +75,8 @@ def main():
         time.sleep(20)
     scenarios = ["building_train_2/fairbanks_2", "building_train_1/fairbanks_1",
                  "building_train_8/phoenix_4", "building_train_5/singapore_4"]
-    tasks = [(s, p) for s in scenarios for p in ["pid_water", args.candidate]]
+    tasks = [(s, p) for s in scenarios for p in [args.baseline, args.candidate]
+             if p == args.candidate or args.reference_root is None]
     running = {}
     try:
         while time.monotonic() < deadline:
@@ -102,10 +112,13 @@ def main():
                 state.update(stage="delegated_to_transfer_gate");save()
                 remaining = (deadline - time.monotonic()) / 3600
                 if remaining <= 0: break
-                os.execv(sys.executable, [sys.executable, "-u", "-m", "smart_buildings.run_allocator_campaign",
-                                         "--root", str(args.root), "--baseline", "pid_water",
-                                         "--candidate", args.candidate, "--skip-ablation",
-                                         "--workers", str(args.workers), "--hours", str(remaining)])
+                command = [sys.executable, "-u", "-m", "smart_buildings.run_allocator_campaign",
+                           "--root", str(args.root), "--baseline", args.baseline,
+                           "--candidate", args.candidate, "--skip-ablation",
+                           "--workers", str(args.workers), "--hours", str(remaining)]
+                if args.reference_root is not None:
+                    command += ["--reference-root", str(args.reference_root)]
+                os.execv(sys.executable, command)
             time.sleep(10)
         state.update(stage="time_budget_reached")
     except Exception as error:

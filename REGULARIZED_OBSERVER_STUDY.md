@@ -109,3 +109,50 @@ extended fit on all four completed public scenarios, reporting both guarded and
 unguarded forecast metrics. A model that improves prediction still needs fresh
 closed-loop transfer tests before any scored submission. Hidden-scenario labels,
 future weather and private physical state are not model inputs.
+
+## Production experiment selected from the forecast evidence
+
+The full original RLS forecast trace was reproduced exactly. Analytic Jacobians
+matched finite differences to below $6\times10^{-9}$. After the first day,
+confidence-weighted current-state MAE on the actual V4 trajectories is:
+
+| Scenario | V4 guarded estimate | Permanent extended fit, unclipped |
+| --- | ---: | ---: |
+| Fairbanks / building 1 | 0.1834 K | 0.0841 K |
+| Fairbanks / building 2 | 0.3475 K | 0.1674 K |
+| Phoenix / building 8 | 0.1789 K | 0.0858 K |
+| Singapore / building 5 | 0.1077 K | 0.0810 K |
+
+All four p99 errors improve. The implicit permanent-prior variant also cures
+the cold-case drift; the extended fit additionally improves the hot cases.
+[Complete forecast comparison](experiments/regularized_observer_comparison.json).
+These numbers do not estimate a new policy's return, because the command path
+remains V4's.
+
+The next registered controller, `regularized_heating`, uses the extended fit,
+permanent physical prior and the existing confidence blend, without the 1.5 K
+cap. Heating allocation and the original cooling actuator law remain V4's;
+the low-gain V5 cooling variant is not combined into this experiment.
+
+The one-step predictor has nonnegative coefficients summing to one over
+$T,T_o,M,T_{supply}$, plus $c/D$. Since $|c|\leq2$ and $D\geq1$:
+
+$$
+\min(T,T_o,M,T_{supply})-2
+\leq f_\theta\leq
+\max(T,T_o,M,T_{supply})+2.
+$$
+
+The confidence blend is a convex combination with the measured temperature.
+Thus removing the separate correction cap retains a bound from the known
+temperatures and parameter projection. This is numerical/model structure, not
+a guarantee of forecast accuracy or closed-loop stability. The predictor is
+anchored to a new measured starting state every decision; no long-horizon bound
+is inferred by recursively applying this inequality.
+
+Before a scored candidate, require passing tests, a frozen source, fresh matching
+8640-action runs, at least 5% combined improvement over V4, nonnegative transfer
+improvement, no case more than 10% worse than V4, and mean action latency below
+10 ms. Also retain the original V0 absolute regression limit of 10% before
+publishing a candidate. Promising local results still require exact export
+equivalence, official gateway completion and the matching Atlanta validation gate.

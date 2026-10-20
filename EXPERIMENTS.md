@@ -42,12 +42,14 @@ The exact weighted loss still improves 12.6%, so carbon is a remaining tradeoff.
 The frozen notebook export exactly reproduced **17280 recorded actions** across
 complete Fairbanks-1 and Phoenix trajectories. The private offline artifact is
 prepared. Private notebook `harshitraj2123221/smart-buildings-adaptive-heating`,
-version 1, is running official validation. Kaggle derived its slug from its title;
+version 1, completed official validation. Kaggle derived its slug from its title;
 tracking was reconciled using exact source/adapter equivalence without relaunching.
 The tracker requires official
 full-horizon gateway completion and at most 10% regression on V0's matching
 Atlanta training case before requesting one scored entry. Attempt markers and
-allowance checks prevent duplicate entries. No candidate entry exists yet.
+allowance checks prevent duplicate entries. Submission **57435234**, created at 11:16 UTC on 2026-10-20, is pending scoring.
+Its official 8641-step Atlanta validation improved loss 11.5% (return
+-190.38652838796406). [API record](experiments/kaggle_adaptive_v4.json).
 
 ## Controlled cooling-inverse study
 
@@ -113,3 +115,16 @@ must not be presented as normal local or leaderboard performance. Unit-test
 results remain valid within their stated scope. The earlier claim that a positive
 occupancy signal meant more than 125 occupants was also corrected: the private
 normalizer assignment is unused, and the actual constructor setting is zero.
+
+## Next closed-loop candidate: permanent-prior observer
+
+The [regularized observer study](REGULARIZED_OBSERVER_STUDY.md) improves causal
+state forecasts on all four completed cases. Its production implementation
+exactly reproduces the prototype's forecast metrics across four complete
+recorded trajectories. This is forecast evidence, not a new control score.
+
+The full suite passes **120 tests**, including permanent information in an
+unexcited direction, an independently checked prediction Jacobian, large trusted
+corrections reaching the controller, reset, delayed labels, and real-building
+action bounds. The next full campaign compares `regularized_heating` with V4
+using its completed matched references; V0's absolute regression gate is retained.

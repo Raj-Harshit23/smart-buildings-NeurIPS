@@ -68,8 +68,8 @@ def main():
     parser.add_argument("--root", type=Path, default=Path("results/allocator-v1"))
     parser.add_argument("--workers", type=int, default=3)
     parser.add_argument("--hours", type=float, default=4)
-    parser.add_argument("--baseline", choices=["pid_water", "thermal_allocator"], default="pid_water")
-    parser.add_argument("--candidate", choices=["thermal_allocator", "lag_aware_allocator", "lag_aware_pid", "adaptive_heating"], default="thermal_allocator")
+    parser.add_argument("--baseline", choices=["pid_water", "thermal_allocator", "adaptive_heating"], default="pid_water")
+    parser.add_argument("--candidate", choices=["thermal_allocator", "lag_aware_allocator", "lag_aware_pid", "adaptive_heating", "regularized_heating"], default="thermal_allocator")
     parser.add_argument("--reference-root", type=Path,
                         help="Reuse completed matched reference runs; never relaunch reference jobs")
     parser.add_argument("--skip-ablation", action="store_true")

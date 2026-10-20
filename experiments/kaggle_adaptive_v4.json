@@ -1,0 +1,29 @@
+{
+  "kernel_ref": "harshitraj2123221/smart-buildings-adaptive-heating",
+  "kernel_version": 1,
+  "submission_id": 57435234,
+  "message": "V4 adaptive clean | cb2256a02031 | b2183d7a9059 | kernel v1",
+  "stage": "waiting_for_public_score",
+  "submission": {
+    "ref": 57435234,
+    "date": "2026-10-20T11:16:56.487Z",
+    "description": "V4 adaptive clean | cb2256a02031 | b2183d7a9059 | kernel v1",
+    "status": "PENDING",
+    "publicScore": null,
+    "errorDescription": "",
+    "fileName": "submission.parquet",
+    "url": "/code/harshitraj2123221/smart-buildings-adaptive-heating?scriptVersionId=360393043"
+  },
+  "official_training_comparison": {
+    "scenario": "building_train_1/atlanta_2",
+    "baseline_return": -215.2204509578005,
+    "candidate_return": -190.38652838796406,
+    "baseline_loss": 0.02490689167432016,
+    "candidate_loss": 0.022032927715306568,
+    "relative_improvement": 0.11538830282771673
+  },
+  "validation_steps": [
+    8641
+  ],
+  "checked_at": "2026-10-20T11:34:04.569384+00:00"
+}
